@@ -1,0 +1,10 @@
+# Website
+public
+.publish
+
+# Node.js
+node_modules
+
+# IntelliJ
+.idea
+*.iml

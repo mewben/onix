@@ -1,0 +1,10 @@
+name = "Eevee"
+dir = "eevee"
+version = "0.0.1"
+description = "A simple mobile first theme for Onix"
+tags = ["blog"]
+license = "MIT"
+
+[author]
+	name = "mewben"
+	site = "http://twitter.com/soldio"

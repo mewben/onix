@@ -1,0 +1,40 @@
+footer {
+    padding: 40px 80px !important;
+    background-color: inherit !important;
+    border-top: 2px solid #E0E0E0;
+}
+.facebook a:hover {
+    color: #3B5998;
+}
+.twitter a:hover {
+    color: #55ACEE;
+}
+.google a:hover {
+    color: #DC4E41;
+}
+.github a:hover {
+    color: #333;
+}
+code {
+    font-size: .95em;
+    padding: 2px 4px;
+    background: #eee;
+    color: #424242;
+    font-family: Source Code Pro, Monaco, Menlo, Consolas, monospace;
+}
+a:link {
+    text-decoration: none;
+}
+.page-content {
+    padding: 20px 0;
+    max-width: 960px;
+    margin: auto;
+}
+.page-content header {
+    padding-bottom: 16px;
+}
+.menu a {
+    display: block;
+    color: #757575;
+    padding: 2px 0
+}
