@@ -18,8 +18,11 @@ func (t *Template) Render(w io.Writer, name string, data interface{}) error {
 }
 
 func Setup(e *echo.Echo) {
+	//var t Template
+
+	//t.templates, _ = template.ParseGlob("public/themes/" + Theme + "/*.tmpl")
 	t := &Template{
-		templates: template.Must(template.ParseGlob("public/themes/" + Theme + "/*.html")),
+		templates: template.Must(template.ParseGlob("public/themes/" + Theme + "/*")),
 	}
 
 	//e.Index("public/themes/" + Theme + "/index.html")

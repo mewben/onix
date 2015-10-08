@@ -1,11 +1,14 @@
 package main
 
 import (
+	"log"
+
 	"github.com/labstack/echo"
 	mw "github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"github.com/mewben/config-echo"
 	"github.com/mewben/db-go-env"
+	"github.com/rs/cors"
 
 	"projects/onix/controllers"
 	"projects/onix/theme"
@@ -33,9 +36,15 @@ func init() {
 
 func main() {
 	e := echo.New()
+
 	e.Use(mw.Recover())
-	e.Use(mw.Logger())
 	e.Use(mw.Gzip())
+
+	if config.Mode == "dev" {
+		e.SetDebug(true)
+		e.Use(mw.Logger())
+		e.Use(cors.Default().Handler)
+	}
 
 	// Public
 	// Setup Theme
@@ -55,5 +64,6 @@ func main() {
 	site := &controllers.SiteController{}
 	e.Get("/", site.Home)
 
+	log.Println("Listening at " + config.Port)
 	e.Run(config.Port)
 }

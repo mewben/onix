@@ -35,8 +35,12 @@
 			"Rev": "6c872cf0330cd369d60a1c066df195d2669d17dd"
 		},
 		{
+			"ImportPath": "github.com/rs/cors",
+			"Rev": "3d951bb2cc0756684d80efcb35bc4256c2aea3f8"
+		},
+		{
 			"ImportPath": "golang.org/x/net/websocket",
-			"Rev": "01256db42e5106196a3473ec1620727a383500e8"
+			"Rev": "47990a1ba55743e6ef1affd3a14e5bac8553615d"
 		}
 	]
 }
