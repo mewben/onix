@@ -1,0 +1,22 @@
+{
+  "name": "onix-admin",
+  "version": "0.0.1",
+  "homepage": "https://github.com/mewben/onix",
+  "authors": [
+    "mewben <melvinsoldia@outlook.com>"
+  ],
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "4.0.0-alpha"
+  }
+}

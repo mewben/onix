@@ -9,6 +9,7 @@ import (
 	"github.com/mewben/config-echo"
 	"github.com/mewben/db-go-env"
 	"github.com/rs/cors"
+	"github.com/thoas/stats"
 
 	"projects/onix/controllers"
 	"projects/onix/theme"
@@ -50,7 +51,15 @@ func main() {
 	// Setup Theme
 	theme.Setup(e)
 
+	e.ServeFile("/admin*", "public/admin/index.html")
+	e.ServeFile("/admin/*", "public/admin/index.html")
+	e.Static("/admin/build", "public/admin/build")
+
 	// Public Routes
+	s := stats.New()
+	e.Get("/stats", func(c *echo.Context) error {
+		return c.JSON(200, s.Data())
+	})
 	e.Get("/mew", func(c *echo.Context) error {
 		theme.Change("mew", e)
 		return c.String(200, "Mew")
