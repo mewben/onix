@@ -8,10 +8,6 @@ class SideNav extends Component {
 
 	render() {
 		let menu = [{
-			title: 'Categories',
-			link: '/categories',
-			icon: 'carousel'
-		}, {
 			title: 'Tags',
 			link: '/tags',
 			icon: 'label'
@@ -53,20 +49,20 @@ class SideNav extends Component {
 						</li>
 						<li className="nav-item">
 							<Link
-								to="/posts/new"
+								to="/content/new"
 								className="nav-link"
 								activeClassName="active"
 							>
-								<Icon name="pencil" size="16" /> New Post
+								<Icon name="pencil" size="16" /> New Content
 							</Link>
 						</li>
 						<li className="nav-item">
 							<IndexLink
-								to="/posts"
+								to="/content"
 								className="nav-link"
 								activeClassName="active"
 							>
-								<Icon name="subject" size="16" /> Posts
+								<Icon name="subject" size="16" /> Content
 							</IndexLink>
 						</li>
 						{menu.map((m, i) => {

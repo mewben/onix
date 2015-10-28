@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Categories extends Component {
+class Tags extends Component {
 
 	render() {
 		return (
@@ -9,4 +9,4 @@ class Categories extends Component {
 	}
 }
 
-export default Categories;
+export default Tags;

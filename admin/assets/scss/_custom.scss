@@ -1,6 +1,15 @@
+label {
+	font-size: 14px;
+	font-weight: 700;
+	margin-bottom: 0.1rem;
+}
 .edge {
 	margin-left: -20px;
 	margin-right: -20px;
+}
+
+.gray {
+	background-color: lighten($gray-lighter, 3%);
 }
 
 #sidenav {
@@ -89,7 +98,9 @@
 .pd {
 	padding: 20px;
 }
-
+.pd-tb {
+	padding: 20px 0;
+}
 .pd-sides {
 	padding: 0 20px;
 }
@@ -116,6 +127,10 @@
 		transition: transform 0.4s cubic-bezier(0.1, 0.7, 0.1, 1);
 		transform: translate3d(235px, 0px, 0px);
 	}
+}
+
+.content {
+	padding-top: 20px;
 }
 
 // Nav Overrides
@@ -159,4 +174,60 @@
 
 .btn-sm {
 	font-size: 12px;
+}
+
+input.title {
+	color: #000;
+	font-weight: 400;
+}
+
+.ReactCodeMirror {
+	font-size: 13px;
+}
+.CodeMirror {
+	height: 480px;
+	border-radius: 5px;
+}
+
+.btn-group>.btn {
+	border: 1px solid rgba(0,0,0,0.2);
+}
+
+.btn-group>.btn:first-child {
+	border-right: none;
+}
+
+.btn-group>.btn+.dropdown-toggle {
+	padding-right: 11px;
+}
+
+.dropdown {
+	outline: none;
+}
+.right {
+	.dropdown-menu {
+		left: inherit;
+		right: 0;
+
+		a {
+			font-size: 13px;
+			display: block;
+			font-weight: 400;
+			padding: 3px 20px;
+			color: $gray;
+
+			&:hover,
+			&:focus,
+			&:active {
+				text-decoration: none;
+				background-color: $gray-lighter;
+			}
+		}
+
+		.divider {
+			height: 1px;
+			margin: .5rem 0;
+			background-color: $gray-lighter;
+		}
+	}
 }

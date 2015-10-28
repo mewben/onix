@@ -1,8 +1,8 @@
 module.exports = {
-	path: 'categories',
+	path: 'tags',
 	getComponent(location, cb) {
 		require.ensure([], require => {
-			cb(null, require('./Categories'))
+			cb(null, require('./Tags'))
 		});
 	}
 }

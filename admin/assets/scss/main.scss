@@ -16,6 +16,8 @@
 @import "bower_components/bootstrap/scss/buttons";
 
 // Components
+@import "bower_components/bootstrap/scss/dropdown";
+@import "bower_components/bootstrap/scss/button-group";
 @import "bower_components/bootstrap/scss/nav";
 
 // Utility classes
@@ -24,6 +26,7 @@
 @import "bower_components/bootstrap/scss/utilities-responsive";
 
 // Custom
+@import "node_modules/react-codemirror/node_modules/codemirror/lib/codemirror";
+@import "node_modules/react-codemirror/node_modules/codemirror/theme/material";
+@import "node_modules/react-select/dist/default";
 @import "custom";
-@import "node_modules/react-quill/node_modules/quill/dist/quill.base";
-@import "node_modules/react-quill/node_modules/quill/dist/quill.snow";

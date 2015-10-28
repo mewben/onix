@@ -20,8 +20,8 @@ const routes = {
 	indexRoute: { component: Dashboard },
 	component: require('./routes/App'),
 	childRoutes: [
-		require('./routes/Posts'),
-		require('./routes/Categories')
+		require('./routes/Content'),
+		require('./routes/Tags')
 	]
 };
 

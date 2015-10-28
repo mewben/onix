@@ -8,7 +8,21 @@ import Icon from '../components/Icon';
 class Header extends Component {
 
 	static propTypes = {
-		actions: PropTypes.object
+		actions: PropTypes.object,
+		buttons: PropTypes.node,
+		title: PropTypes.node
+	}
+
+	_renderTitle() {
+		if (this.props.title) {
+			return this.props.title;
+		}
+	}
+
+	_renderButtons() {
+		if (this.props.buttons) {
+			return this.props.buttons;
+		}
 	}
 
 	render() {
@@ -20,11 +34,11 @@ class Header extends Component {
 					<div className="col-xs-6">
 						<section>
 							<div onTouchTap={actions.openNav} className="logo hidden-md-up"><Icon name="logo" size="28" /></div>
-							<div className="title">Dashboard</div>
+							{this._renderTitle()}
 						</section>
 					</div>
 					<div className="col-xs-6 text-right">
-						<button className="btn btn-sm btn-primary">New</button>
+						{this._renderButtons()}
 					</div>
 				</div>
 			</header>

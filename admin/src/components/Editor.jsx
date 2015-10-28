@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import ReactQuill from 'react-quill';
+import Codemirror from 'react-codemirror';
 
 class Editor extends Component {
 
 	render() {
+		let options = {
+			lineNumbers: true,
+			styleActiveLine: true,
+			matchBrackets: true,
+			theme: 'material'
+		};
 		return (
-			<ReactQuill
-				theme="snow"
-				value="Hello"
+			<Codemirror
+				value="<h1>Hello</h1>"
+				options={options}
 			/>
 		);
 	}

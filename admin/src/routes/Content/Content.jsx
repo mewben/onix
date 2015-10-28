@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-class Posts extends Component {
+class Content extends Component {
 
 	static propTypes = {
 		children: PropTypes.node
@@ -8,12 +8,11 @@ class Posts extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>Posts</h1>
+			<div className="row">
 				{this.props.children}
 			</div>
 		);
 	}
 }
 
-export default Posts;
+export default Content;
