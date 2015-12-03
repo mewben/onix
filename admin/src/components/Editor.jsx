@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Codemirror from 'react-codemirror';
 
 class Editor extends Component {
+
+	static propTypes = {
+		onChange: PropTypes.func,
+		value: PropTypes.string
+	}
 
 	render() {
 		let options = {
@@ -12,8 +17,10 @@ class Editor extends Component {
 		};
 		return (
 			<Codemirror
-				value="<h1>Hello</h1>"
+				ref="editor"
+				value={this.props.value}
 				options={options}
+				onChange={this.props.onChange}
 			/>
 		);
 	}

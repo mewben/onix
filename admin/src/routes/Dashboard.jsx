@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../partials/Header';
 
-class Dashboard extends Component {
+export default class Dashboard extends Component {
 
 	render() {
 		return (
@@ -20,4 +20,4 @@ class Dashboard extends Component {
 	}
 }
 
-export default Dashboard;
+//export default Dashboard;

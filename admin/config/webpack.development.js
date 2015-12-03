@@ -30,7 +30,7 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.jsx'],
 		alias: {
-			config: path.join(__dirname, 'dev')
+			config: path.join(__dirname, 'development')
 		}
 	},
 	eslint: {

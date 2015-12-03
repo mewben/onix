@@ -4,7 +4,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 import rootReducer from '../reducers';
 
-let middleware = [thunkMiddleware, promiseMiddleware];
+let middleware = [thunkMiddleware, promiseMiddleware()];
 
 // only add logger if dev mode
 if (process.env.NODE_ENV !== 'production') {

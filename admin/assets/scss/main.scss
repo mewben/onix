@@ -28,5 +28,6 @@
 // Custom
 @import "node_modules/react-codemirror/node_modules/codemirror/lib/codemirror";
 @import "node_modules/react-codemirror/node_modules/codemirror/theme/material";
-@import "node_modules/react-select/dist/default";
+@import "node_modules/react-select/dist/react-select.min";
+//@import "node_modules/react-select/dist/default";
 @import "custom";

@@ -23,8 +23,3 @@ build
 node_modules
 bower_components
 
-
-###### Development/Production config
-config/development.js
-config/production.js
-

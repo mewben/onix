@@ -32,7 +32,7 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.jsx'],
 		alias: {
-			config: path.join(__dirname, 'prod')
+			config: path.join(__dirname, 'production')
 		}
 	},
 	eslint: {

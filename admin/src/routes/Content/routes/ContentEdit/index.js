@@ -1,8 +1,8 @@
 module.exports = {
-	path: 'new',
+	path: 'edit/:id',
 	getComponent(location, cb) {
 		require.ensure([], require => {
-			cb(null, require('./ContentNew'));
+			cb(null, require('./ContentEdit'));
 		});
 	}
 }

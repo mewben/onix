@@ -12,7 +12,8 @@ module.exports = {
 	getChildRoutes(location, cb) {
 		require.ensure([], require => {
 			cb(null, [
-				require('./routes/ContentNew')
+				require('./routes/ContentNew'),
+				require('./routes/ContentEdit')
 			]);
 		});
 	}

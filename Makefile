@@ -53,4 +53,4 @@ restart:
 # will also kill server after ctrl+c
 serve: dependencies
 	@make restart
-	@fswatch -or ./*.go ./controllers/*.go ./models/*.go ./public/* | xargs -n1 -I{} make restart || make kill
+	@fswatch -or ./*.go ./controllers/*.go ./models/*.go ./utils/*.go ./public/* | xargs -n1 -I{} make restart || make kill

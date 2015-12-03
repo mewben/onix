@@ -231,3 +231,18 @@ input.title {
 		}
 	}
 }
+
+.input-icon {
+	position: relative;
+
+	svg {
+		color: $blue2;
+		position: absolute;
+		top: 7px;
+		left: 7px;
+	}
+
+	.form-control {
+		padding-left: 40px;
+	}
+}

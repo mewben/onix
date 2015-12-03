@@ -1,0 +1,7 @@
+development:
+    driver: postgres
+    open: host=localhost user=root password=passwD dbname=onixdb sslmode=disable
+
+test:
+    driver: postgres
+    open: host=localhost user=root password=passwD dbname=onixdb sslmode=disable

@@ -18,7 +18,7 @@ import (
 func init() {
 	var (
 		conn db.Database
-		port = "localhost:1300" // appport = 1300, proxy = 1310
+		port = "0.0.0.0:1300" // appport = 1300, proxy = 1310
 	)
 
 	conn.DbHost = "server2.dev"
@@ -41,10 +41,20 @@ func main() {
 	e.Use(mw.Recover())
 	e.Use(mw.Gzip())
 
+	api := e.Group("/api")
+
 	if config.Mode == "dev" {
 		e.SetDebug(true)
 		e.Use(mw.Logger())
+
+		c := cors.New(cors.Options{
+			AllowedOrigins:   []string{"*"},
+			AllowedMethods:   []string{"POST", "GET", "PUT", "DELETE"},
+			AllowedHeaders:   []string{"Accept", "Content-Type", "Authorization"},
+			AllowCredentials: true,
+		})
 		e.Use(cors.Default().Handler)
+		api.Use(c.Handler)
 	}
 
 	// Public
@@ -72,6 +82,11 @@ func main() {
 
 	site := &controllers.SiteController{}
 	e.Get("/", site.Home)
+
+	// ======== API
+	content := controllers.ContentController{}
+	api.Post("/content", content.Save)
+	api.Put("/content/:id", content.Save)
 
 	log.Println("Listening at " + config.Port)
 	e.Run(config.Port)
