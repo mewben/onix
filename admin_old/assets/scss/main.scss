@@ -1,0 +1,33 @@
+// Core variables and mixins
+@import "bower_components/bootstrap/scss/variables";
+@import "variables"; // variables overrride and custom
+@import "bower_components/bootstrap/scss/mixins";
+
+// Reset and dependencies
+@import "bower_components/bootstrap/scss/normalize";
+@import "bower_components/bootstrap/scss/print";
+
+// Core CSS
+@import "bower_components/bootstrap/scss/reboot";
+@import "bower_components/bootstrap/scss/type";
+@import "bower_components/bootstrap/scss/grid";
+@import "bower_components/bootstrap/scss/forms";
+//@import "bower_components/bootstrap/scss/tables";
+@import "bower_components/bootstrap/scss/buttons";
+
+// Components
+@import "bower_components/bootstrap/scss/dropdown";
+@import "bower_components/bootstrap/scss/button-group";
+@import "bower_components/bootstrap/scss/nav";
+
+// Utility classes
+@import "bower_components/bootstrap/scss/utilities";
+@import "bower_components/bootstrap/scss/utilities-spacing";
+@import "bower_components/bootstrap/scss/utilities-responsive";
+
+// Custom
+//@import "node_modules/react-codemirror/node_modules/codemirror/lib/codemirror";
+//@import "node_modules/react-codemirror/node_modules/codemirror/theme/material";
+@import "node_modules/react-select/dist/react-select.min";
+//@import "node_modules/react-select/dist/default";
+@import "custom";

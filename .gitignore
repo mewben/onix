@@ -3,6 +3,11 @@ gin-bin.exe
 gin-bin.exe~
 
 onix
+onix.exe
+onix.exe~
+
+node_modules
+npm-debug.log
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o

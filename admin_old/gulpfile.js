@@ -34,6 +34,26 @@ gulp.task('webpack-build', function() {
 
 // ============ sass / scss
 gulp.task('sass', function() {
+
+	// TinyMCE
+	gulp.src('assets/scss/tinymce/*.scss')
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(gulp.dest('admin/build/tinymce'));
+/*
+	gulp.src('assets/scss/skin.min.scss')
+		.pipe(sourcemaps.init())
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(autoprefixer())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('admin/build'));
+
+	gulp.src('assets/scss/content.min.scss')
+		.pipe(sourcemaps.init())
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(autoprefixer())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('admin/build'));
+*/
 	return gulp.src('assets/scss/main.scss')
 		.pipe(sourcemaps.init())
 		.pipe(sass({outputStyle: 'compressed'}))
@@ -44,6 +64,16 @@ gulp.task('sass', function() {
 
 // ============ sass-build
 gulp.task('sass-build', function() {
+	gulp.src('assets/scss/skin.min.scss')
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(autoprefixer())
+		.pipe(gulp.dest('admin/build'));
+
+	gulp.src('assets/scss/content.min.scss')
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(autoprefixer())
+		.pipe(gulp.dest('admin/build'));
+
 	return gulp.src('assets/scss/main.scss')
 		.pipe(sass({outputStyle: 'compressed'}))
 		.pipe(autoprefixer())

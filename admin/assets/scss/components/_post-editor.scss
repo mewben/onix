@@ -1,0 +1,56 @@
+.editor__switch-mode {
+	float: right;
+	min-width: 160px;
+	margin: 0 2px -1px;
+	position: relative;
+	z-index: 1;
+
+}
+@include media-breakpoint-up(sm) {
+	.editor__switch-mode {
+		margin: 0 20px -1px;
+	}
+}
+
+.editor__switch-mode .segmented-control__item {
+	&:first-of-type {
+		.segmented-control__link {
+			border-bottom-left-radius: 0;
+		}
+	}
+
+	&:last-of-type {
+		.segmented-control__link {
+			border-right-color: lighten( $gray, 20% );
+			border-bottom-right-radius: 0;
+		}
+	}
+
+	&.is-selected {
+		+ .segmented-control__item .segmented-control__link {
+			border-left-color: lighten( $gray, 20% );
+		}
+	}
+}
+
+.editor__switch-mode .segmented-control__link {
+	background: $gray-light;
+	border-color: lighten( $gray, 20% );
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.editor__switch-mode .segmented-control__item.is-selected .segmented-control__link {
+	border-color: lighten( $gray, 20% );
+	border-bottom-color: $white;
+	background-color: $white;
+}
+
+.content-textarea {
+	clear:both;
+	border-top: 1px solid lighten($gray, 20%);
+	border-bottom: 1px solid lighten($gray, 20%);
+	padding: 20px 0;
+}

@@ -4,9 +4,9 @@
 CREATE TABLE users (
 	id serial,
 	uuid varchar(36) NOT NULL,
-	name varchar(150) NOT NULL,
-	slug varchar(150) NOT NULL,
-	email varchar(254) NOT NULL,
+	name varchar(150) NOT NULL CHECK(name <> ''),
+	slug varchar(150) NOT NULL CHECK(slug <> ''),
+	email varchar(254) NOT NULL CHECK(email <> ''),
 	password varchar(60) NOT NULL,
 	image varchar(254) NULL,
 	cover varchar(254) NULL,
@@ -22,14 +22,17 @@ CREATE TABLE users (
 	created_by int NULL,
 	updated_at timestamp(6) WITH TIME ZONE NOT NULL DEFAULT NOW(),
 	updated_by int NULL,
+	meta jsonb NULL,
 
 	PRIMARY KEY (id),
+	UNIQUE (uuid),
 	UNIQUE (slug),
 	UNIQUE (email),
 	FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE RESTRICT,
 	FOREIGN KEY (updated_by) REFERENCES users (id) ON DELETE RESTRICT
 );
 
+CREATE INDEX ON users (uuid);
 CREATE INDEX ON users (slug);
 CREATE INDEX ON users (email);
 CREATE INDEX ON users (status) WHERE status = 'active';

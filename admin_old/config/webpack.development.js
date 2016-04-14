@@ -58,6 +58,12 @@ module.exports = {
 					'babel?loose=all'
 				],
 				exclude: /node_modules/
+			},{
+				include: require.resolve( 'tinymce/tinymce' ),
+				loader: 'exports?window.tinymce',
+			},{
+				include: /node_modules\/tinymce/,
+				loader: 'imports?this=>window',
 			}
 		]
 	}

@@ -16,17 +16,8 @@ import (
 )
 
 func init() {
-	var (
-		conn db.Database
-		port = "0.0.0.0:1300" // appport = 1300, proxy = 1310
-	)
-
-	conn.DbHost = "server2.dev"
-	conn.DbPort = "5432"
-	conn.DbUser = "mewben"
-	conn.DbName = "onixdb"
-	conn.DbPass = "passwD"
-	conn.SslMode = "disable"
+	// get env
+	conn, port := utils.GetEnv()
 
 	// setup DB
 	db.Setup(conn)
@@ -40,6 +31,11 @@ func main() {
 
 	e.Use(mw.Recover())
 	e.Use(mw.Gzip())
+
+	key, err := utils.GetConfigString("admin_signingkey")
+	if err != nil {
+		panic(err)
+	}
 
 	api := e.Group("/api")
 

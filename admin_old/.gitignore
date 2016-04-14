@@ -1,0 +1,25 @@
+###### Junk files
+.DS_Store
+.DS_STORE
+Thumbs.db
+
+
+###### Logs
+logs
+*.log
+
+
+###### Runtime data
+pids
+*.pid
+*.seed
+
+
+###### Compiled files
+build
+
+
+###### Dependency directory
+node_modules
+bower_components
+

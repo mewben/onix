@@ -1,19 +1,26 @@
-// Colors
-$blue: #69D2E7;
-$blue2: #A7DBD8;
-$beach: #E0E4CC;
-$orange: #FA6900;
-$orange2: #F38630;
+$white: #ffffff;
+
+$blue: #0087be;
+$blue-light: #78dcfa;
+$blue-medium: #00aadc;
+$blue-dark: #005082;
+$blue-custom: #3498db;
+
+$gray: #87a6bc;
+//$gray: #77cc6d;
+$gray-light: lighten($gray, 33%);
+$gray-dark: darken($gray, 38%);
+
+$body-bg: $gray-light;
+
+
+$brand-info: $blue-dark;
 
 // Typography
-$font-family-sans-serif: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-base: $font-family-sans-serif;
+$sans-fallback: Helvetica, Arial, sans-serif;
+$font-family-sans-serif: Lato, $sans-fallback;
 
-// Nav
-$component-active-bg: $brand-info;
-$nav-link-padding: 5px 15px;
-$border-color: #e7e7ec;
+$serif-fallback: Georgia, "Times New Roman", Times, serif;
+$font-family-serif: "Merriweather", $serif-fallback;
 
-// buttons
-$btn-primary-bg: $orange;
-$btn-primary-border: $orange;
+$text-muted: darken($white, 30%);

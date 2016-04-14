@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 
 import rootReducer from '../reducers';
 
-let middleware = [thunkMiddleware, promiseMiddleware()];
+let middleware = [promiseMiddleware()];
 
 // only add logger if dev mode
 if (process.env.NODE_ENV !== 'production') {
@@ -19,6 +18,7 @@ export default function configureStore(initialState) {
 	const store = createStoreWithMiddleware(rootReducer, initialState);
 
 	if (module.hot) {
+		console.log('HOT HOT HOT');
 		// Enable Webpack hot module replacement for reducers
 		module.hot.accept('../reducers', () => {
 			const nextRootReducer = require('../reducers');
@@ -28,4 +28,3 @@ export default function configureStore(initialState) {
 
 	return store;
 }
-
