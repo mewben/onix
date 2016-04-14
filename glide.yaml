@@ -1,0 +1,10 @@
+package: projects/onix
+import:
+- package: github.com/labstack/echo
+  subpackages:
+  - engine/fasthttp
+  - middleware
+- package: github.com/lib/pq
+- package: github.com/mewben/config-echo
+- package: github.com/mewben/db-go-env
+- package: github.com/satori/go.uuid

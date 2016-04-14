@@ -1,1 +1,0 @@
-webpackJsonp([1,3],{383:function(t,e,n){"use strict";var u=n(9).default,o=n(8).default,r=n(3).default;e.__esModule=!0;var i=n(2),f=r(i),c=function(t){function e(){o(this,e),t.apply(this,arguments)}return u(e,t),e.prototype.render=function(){return f.default.createElement("h1",null,"Categoreisdlfk ekrjek")},e}(i.Component);e.default=c,t.exports=e.default}});

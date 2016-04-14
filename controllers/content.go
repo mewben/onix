@@ -9,7 +9,7 @@ import (
 
 type ContentController struct{}
 
-func (*ContentController) Save(c *echo.Context) error {
+func (*ContentController) Save(c echo.Context) error {
 	var payload models.ContentPayload
 
 	if err := c.Bind(&payload); err != nil {
