@@ -3,6 +3,7 @@ A simple Go (Golang) Blogging Platform (WIP)
 
 ### [Development] Pre Installation
 You must have the following stack:
+
 	- Go 1.6+
 	- glide
 	- goose

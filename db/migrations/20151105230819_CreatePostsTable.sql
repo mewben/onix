@@ -1,11 +1,11 @@
 
 -- +goose Up
 -- SQL in section 'Up' is executed when this migration is applied
-CREATE TABLE content (
+CREATE TABLE posts (
 	id serial,
-	uuid varchar(36) NOT NULL,
-	title varchar(150) NOT NULL,
-	slug varchar(150) NOT NULL,
+	title varchar(250) NOT NULL CHECK(title <> ''),
+	subtitle varchar(250) NULL,
+	slug varchar(150) NOT NULL CHECK(slug <> ''),
 	body text NULL,
 	image varchar(254) NULL,
 	type varchar(150) NOT NULL DEFAULT 'post',
@@ -31,8 +31,8 @@ CREATE TABLE content (
 	FOREIGN KEY (published_by) REFERENCES users (id) ON DELETE RESTRICT
 );
 
-CREATE INDEX ON content (slug);
-CREATE INDEX ON content (type);
+CREATE INDEX ON posts (slug);
+CREATE INDEX ON posts (status);
 
 -- +goose Down
 -- SQL section 'Down' is executed when this migration is rolled back

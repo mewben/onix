@@ -3,11 +3,11 @@
 -- SQL in section 'Up' is executed when this migration is applied
 CREATE TABLE users (
 	id serial,
-	uuid varchar(36) NOT NULL,
+	username varchar(150) NOT NULL CHECK(name <> ''),
+	password varchar(60) NOT NULL,
 	name varchar(150) NOT NULL CHECK(name <> ''),
 	slug varchar(150) NOT NULL CHECK(slug <> ''),
 	email varchar(254) NOT NULL CHECK(email <> ''),
-	password varchar(60) NOT NULL,
 	image varchar(254) NULL,
 	cover varchar(254) NULL,
 	bio varchar(254) NULL,
@@ -19,37 +19,37 @@ CREATE TABLE users (
 	meta_description varchar(200) NULL,
 	last_login timestamp(6) WITH TIME ZONE NULL,
 	created_at timestamp(6) WITH TIME ZONE NOT NULL DEFAULT NOW(),
-	created_by int NULL,
 	updated_at timestamp(6) WITH TIME ZONE NOT NULL DEFAULT NOW(),
-	updated_by int NULL,
-	meta jsonb NULL,
+	role_id int NOT NULL,
+	meta jsonb NOT NULL DEFAULT '{}',
 
 	PRIMARY KEY (id),
-	UNIQUE (uuid),
+	UNIQUE (username),
 	UNIQUE (slug),
 	UNIQUE (email),
-	FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE RESTRICT,
-	FOREIGN KEY (updated_by) REFERENCES users (id) ON DELETE RESTRICT
+
+	FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE RESTRICT
 );
 
-CREATE INDEX ON users (uuid);
 CREATE INDEX ON users (slug);
 CREATE INDEX ON users (email);
 CREATE INDEX ON users (status) WHERE status = 'active';
 
 
 INSERT INTO users (
-	uuid,
+	username,
 	name,
 	slug,
 	email,
-	password
+	password,
+	role_id
 ) VALUES (
-	'4857d65d-15af-4fc2-be28-209447c71f78',
-	'Melvin Soldia',
+	'superadmin',
+	'superadmin',
 	'mewben',
-	'melvinsoldia@gmail.com',
-	'$2a$10$JLiXfYkmX7L1kRLuuAAth.7.QN5G18e9pl8BZpeOxTVbuijhQ6Hs6'
+	'test@test.com',
+	'$2a$10$JLiXfYkmX7L1kRLuuAAth.7.QN5G18e9pl8BZpeOxTVbuijhQ6Hs6',
+	1
 );
 -- +goose Down
 -- SQL section 'Down' is executed when this migration is rolled back

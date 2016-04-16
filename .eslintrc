@@ -20,6 +20,8 @@
 			}
 		],
 		"semi": ["error", "always"],
-		"space-before-function-paren": ["error", "never"]
+		"space-before-function-paren": ["error", "never"],
+		"jsx-quotes": ["error", "prefer-double"],
+		"react/no-unknown-property": 0
 	}
 }
