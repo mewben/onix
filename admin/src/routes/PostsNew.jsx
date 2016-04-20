@@ -1,12 +1,7 @@
 import React from 'react';
 
-import FormPostNew from '../components/FormPostNew';
+import FormPost from '../containers/FormPost';
 
-const PostsNew = () => (
-	<div>
-		<h1>New Post</h1>
-		<FormPostNew />
-	</div>
-);
+const PostsNew = () => (<FormPost />);
 
 export default PostsNew;

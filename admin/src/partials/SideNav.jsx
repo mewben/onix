@@ -14,7 +14,7 @@ let mainmenu = [{
 }];
 
 const SideNav = () => (
-	<div id="sidenav">
+	<div className="column is-2" id="sidenav">
 		<div className="scrollable">
 			<section>
 				<ul className="nav nav-pills nav-stacked">

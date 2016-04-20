@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
 
-import SideNav from '../partials/SideNav';
+import Navbar from '../partials/Navbar';
 
 const Admin = ({children}) => (
 	<div>
-		<SideNav />
-		<main>{children}</main>
+		<Navbar />
+		<div className="container-fluid m-t-2">
+			{children}
+		</div>
 	</div>
 );
 

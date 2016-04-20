@@ -8,3 +8,5 @@ import:
 - package: github.com/mewben/config-echo
 - package: github.com/mewben/db-go-env
 - package: github.com/satori/go.uuid
+excludeDirs:
+- node_modules

@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var precss = require('precss');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -18,7 +17,7 @@ module.exports = {
 		}
 	},
 	plugins: [
-		new ExtractTextPlugin('style.min.css'),
+		new ExtractTextPlugin('main.min.css'),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.DefinePlugin({
@@ -38,12 +37,11 @@ module.exports = {
 				test: /\.jsx?$/,
 				loaders: ['babel-loader'],
 				exclude: /node_modules/,
-				include: __dirname + '/admin/src'
+				include: path.join(__dirname, 'admin', 'src')
 			}, {
 				test: /\.scss$/,
-				loader: ExtractTextPlugin.extract('style-loader', 'css-loader', 'postcss-loader')
+				loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
 			}
 		]
-	},
-	postcss: [precss]
+	}
 };

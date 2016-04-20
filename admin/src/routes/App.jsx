@@ -1,4 +1,4 @@
-require('styles/base.scss');
+import 'styles/main.scss';
 
 const App = ({children}) => (children);
 
