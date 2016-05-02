@@ -1,5 +1,13 @@
 package models
 
+import (
+	"time"
+)
+
+const (
+	TUSERS = "users"
+)
+
 type (
 	ContentPayload struct {
 		Id              int
@@ -22,3 +30,15 @@ type (
 		Iss             int
 	}
 )
+
+// returns the current datetime
+// based on the time_offset setting
+func GetUTCTime() (response string, err error) {
+	var utc = time.Now().UTC()
+
+	offset := time.Duration(8) // +8:00
+
+	response = utc.Add(offset * time.Hour).Format("01-02-2006 15:04")
+
+	return
+}

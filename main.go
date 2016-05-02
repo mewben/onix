@@ -7,9 +7,9 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/fasthttp"
 	"github.com/labstack/echo/middleware"
+	_ "github.com/lib/pq"
 	"github.com/mewben/config-echo"
-	//_ "github.com/lib/pq"
-	//"github.com/mewben/db-go-env"
+	"github.com/mewben/db-go-env"
 	"projects/onix/controllers"
 	"projects/onix/theme"
 )
@@ -18,7 +18,7 @@ import (
 func init() {
 	type Config struct {
 		SERVERPORT string
-		//DB   db.Database
+		DB         db.Database
 	}
 
 	configFile, err := os.Open("env.json")
@@ -34,7 +34,7 @@ func init() {
 	}
 
 	// setup postgres db connection
-	//db.Setup(devConfig.DB)
+	db.Setup(devConfig.DB)
 
 	// setup port
 	// This sets the global Port string
@@ -57,14 +57,54 @@ func main() {
 	// Setup Theme
 	theme.Setup(app)
 
+	api := app.Group("/api")
+
+	if config.Mode == "dev" {
+		// Enable Debug
+		app.SetDebug(true)
+		cors_enabled := middleware.CORSWithConfig(middleware.CORSConfig{
+			AllowHeaders: []string{
+				echo.HeaderOrigin,
+			},
+		})
+		// Enable CORS /
+		app.Use(cors_enabled)
+		// Enable CORS /api
+		api.Use(cors_enabled)
+	}
+
+	users := controllers.UsersController{}
+	app.Post("/auth/login", users.Login)
+
+	// get api routes
+	api.Use(middleware.JWTAuthWithConfig(middleware.JWTAuthConfig{
+		SigningMethod: middleware.AlgorithmHS256,
+		SigningKey:    []byte("evdzpwadminsing"),
+		Extractor:     middleware.JWTFromHeader,
+	}))
+	ApiRoutes(api)
+
 	// ======= SITES =====
 	site := controllers.SiteController{}
 	app.Get("/", site.Home)
 
-	// api
-	//api := app.Group("/api")
-
 	app.Run(fasthttp.New(config.Port))
+}
+
+// ========== API ROUTES ======
+func ApiRoutes(api *echo.Group) {
+
+	// ======= ADMIN API ======
+	admin := controllers.AdminController{}
+	api.Get("/utctime", admin.GetUTCTime)
+
+	// CRUD /api/tags
+	/* tags := controllers.TagsController{}
+	api.Get("/tags", tags.Get)
+	api.Post("/tags", tags.Save)
+	api.Put("/tags/:id", tags.Update)
+	api.Delete("/tags/:id", tags.Destroy)
+	*/
 }
 
 /*

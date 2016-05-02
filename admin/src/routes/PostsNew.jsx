@@ -1,7 +1,7 @@
 import React from 'react';
 
-import FormPost from '../containers/FormPost';
+import PostEdit from '../containers/PostEdit';
 
-const PostsNew = () => (<FormPost />);
+const PostsNew = () => (<PostEdit />);
 
 export default PostsNew;

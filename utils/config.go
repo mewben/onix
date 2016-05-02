@@ -7,20 +7,6 @@ import (
 	"github.com/mewben/db-go-env"
 )
 
-// env
-func GetEnv() (conn db.Database, port string) {
-	conn.DbHost = "server2.dev"
-	conn.DbPort = "5432"
-	conn.DbName = "onixdb"
-	conn.DbUser = "mewben"
-	conn.DbPass = "passwD"
-	conn.SslMode = "disable"
-
-	port = "localhost:1300"
-
-	return
-}
-
 // generic
 func getConfig(key string) (value string, err error) {
 	var (

@@ -48,9 +48,11 @@
     "gulp-livereload": "^3.8.1",
     "gulp-sync": "^0.1.4",
     "gulp-util": "^3.0.7",
+    "json-loader": "^0.5.4",
     "node-notifier": "^4.5.0",
     "node-sass": "^3.4.2",
     "postcss-import": "^8.1.0",
+    "react-hot-loader": "^3.0.0-beta.0",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.12.15",
@@ -60,10 +62,11 @@
   "dependencies": {
     "history": "^2.0.1",
     "immutable": "^3.7.6",
-    "react": "^15.0.1",
+    "isomorphic-fetch": "^2.2.1",
+    "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.0.1",
     "react-addons-shallow-compare": "^15.0.1",
-    "react-dom": "^15.0.1",
+    "react-dom": "^15.0.2",
     "react-formal": "^0.17.0",
     "react-redux": "^4.4.4",
     "react-router": "^2.2.4",
@@ -72,6 +75,7 @@
     "react-selectize": "^2.0.1",
     "redux": "^3.4.0",
     "redux-logger": "^2.6.1",
+    "redux-promise-middleware": "^3.0.0",
     "redux-thunk": "^2.0.1",
     "yup": "^0.17.1"
   }

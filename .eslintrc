@@ -23,5 +23,8 @@
 		"space-before-function-paren": ["error", "never"],
 		"jsx-quotes": ["error", "prefer-double"],
 		"react/no-unknown-property": 0
+	},
+	"globals": {
+		"fetch": false
 	}
 }

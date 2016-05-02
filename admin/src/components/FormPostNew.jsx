@@ -59,7 +59,16 @@ class FormPostNew extends Component {
 
 		this.state = {
 			// body: '<strong>Strong Content</strong>',
-			tags: [{label: 'hello', value: 'hello'}]
+			// tags: [{label: 'hello', value: 'hello'}]
+			tags: [{
+				id: 1,
+				name: 'Hello World',
+				slug: 'hello-world'
+			}, {
+				id: 2,
+				name: 'SDE',
+				slug: 'sde'
+			}]
 		};
 	}
 

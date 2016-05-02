@@ -13,7 +13,8 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.jsx', '.scss'],
 		alias: {
-			styles: path.resolve(__dirname, 'admin', 'assets', 'styles')
+			styles: path.resolve(__dirname, 'admin', 'assets', 'styles'),
+			root: __dirname
 		}
 	},
 	plugins: [
@@ -41,6 +42,9 @@ module.exports = {
 			}, {
 				test: /\.scss$/,
 				loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+			}, {
+				test: /\.json$/,
+				loader: 'json-loader'
 			}
 		]
 	}

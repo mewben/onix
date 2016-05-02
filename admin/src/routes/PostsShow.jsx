@@ -15,7 +15,7 @@ class PostsShow extends Component {
 		const { params } = this.props;
 
 		return (
-			<h1>Show Post {params.id}</h1>
+			<h1>Show Post {params.id}. ehhlokdjf sde</h1>
 		);
 	}
 

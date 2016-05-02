@@ -16,11 +16,13 @@ module.exports = {
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin()
+		// new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 	],
 	resolve: {
 		extensions: ['', '.js', '.jsx', '.scss', '.css'],
 		alias: {
-			styles: path.resolve(__dirname, 'admin', 'assets', 'styles')
+			styles: path.resolve(__dirname, 'admin', 'assets', 'styles'),
+			root: __dirname
 		}
 	},
 	module: {
@@ -41,6 +43,9 @@ module.exports = {
 			}, {
 				test: /\.s?css$/,
 				loaders: ['style-loader', 'css-loader', 'sass-loader']
+			}, {
+				test: /\.json$/,
+				loader: 'json-loader'
 			}
 		]
 	}
