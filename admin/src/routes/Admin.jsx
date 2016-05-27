@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react';
 
-import Navbar from '../partials/Navbar';
+import TopNav from '../partials/TopNav';
+import Footer from '../partials/Footer';
 
 const Admin = ({children}) => (
 	<div>
-		<Navbar />
-		<div className="container-fluid m-t-2">
+		<TopNav />
+		<div className="container m-t-2">
 			{children}
+			<Footer />
 		</div>
 	</div>
 );

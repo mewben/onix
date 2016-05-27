@@ -1,13 +1,14 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import yup from 'yup';
+import { Map } from 'immutable';
+// import yup from 'yup';
 
 import FormPost from '../components/FormPost';
 import { getUTCTime } from '../actions/AppActions';
 import { fetchTags } from '../actions/TagActions';
 
-const requiredMsg = 'This is a required field.';
-const schema = yup.object({
+// const requiredMsg = 'This is a required field.';
+/* const schema = yup.object({
 	id: yup.number(),
 	title: yup.string().required(requiredMsg),
 	slug: yup.string(),
@@ -16,8 +17,8 @@ const schema = yup.object({
 	published_at: yup.string(),
 	image: yup.string(),
 	tags: yup.string()
-});
-const model = {
+}); */
+const model = new Map({
 	id: 0,
 	title: '',
 	slug: '',
@@ -34,21 +35,19 @@ const model = {
 		name: 'SDE',
 		slug: 'sde'
 	}]
-};
+});
 
 class PostEdit extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log('props', props);
 
 		this.state = {
-			model: model,
-			tags: props.tag.items
+			model: model
 		};
 	}
 
-	componentWillMount() {
+	/* componentWillMount() {
 		this.props.getUTCTime()
 			.then((res) => {
 				let { model } = this.state;
@@ -61,22 +60,19 @@ class PostEdit extends Component {
 					return this.props.fetchTags();
 				}
 			}).catch(() => null);
-	}
+	} */
 
-	_onSubmit = (draft) => {
+	_onSubmit = (input, draft) => {
 		console.log(this.state.model);
 		console.log('dreaft?', draft);
 	};
 
 	render() {
-		let { model, tags } = this.state;
+		let { model } = this.state;
 
 		return (
 			<FormPost
-				schema={schema}
 				value={model}
-				onChange={(model) => this.setState({model})}
-				options={tags}
 				handleSubmit={this._onSubmit}
 			/>
 		);

@@ -5,7 +5,9 @@ import (
 )
 
 const (
-	TUSERS = "users"
+	TREFRESHTOKENS = "refresh_tokens"
+	TSETTINGS      = "settings"
+	TUSERS         = "users"
 )
 
 type (

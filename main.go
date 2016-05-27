@@ -77,11 +77,11 @@ func main() {
 	app.Post("/auth/login", users.Login)
 
 	// get api routes
-	api.Use(middleware.JWTAuthWithConfig(middleware.JWTAuthConfig{
+	/* api.Use(middleware.JWTAuthWithConfig(middleware.JWTAuthConfig{
 		SigningMethod: middleware.AlgorithmHS256,
 		SigningKey:    []byte("evdzpwadminsing"),
 		Extractor:     middleware.JWTFromHeader,
-	}))
+	})) */
 	ApiRoutes(api)
 
 	// ======= SITES =====

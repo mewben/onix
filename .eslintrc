@@ -22,7 +22,8 @@
 		"semi": ["error", "always"],
 		"space-before-function-paren": ["error", "never"],
 		"jsx-quotes": ["error", "prefer-double"],
-		"react/no-unknown-property": 0
+		"react/no-unknown-property": 0,
+    "react/display-name": 0
 	},
 	"globals": {
 		"fetch": false

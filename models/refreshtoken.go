@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/mewben/db-go-env"
-	"projects/ismis/admin/utils"
+	"projects/onix/utils"
 )
 
 type RefreshToken struct {
@@ -111,14 +111,8 @@ func Delegate(iss int, rft string) (response LoginResponse, err error) {
 		return
 	}
 
-	// Get user permissions
-	me.Permissions, err = user.GetPermissions(iss)
-	if err != nil {
-		return
-	}
-
 	// Generete tokens
-	response, err = GenerateTokens(iss, me.Permissions)
+	response, err = GenerateTokens(iss, me.Role)
 	if err != nil {
 		return
 	}
@@ -131,7 +125,7 @@ func Delegate(iss int, rft string) (response LoginResponse, err error) {
 // Generate Tokens
 // when login
 // when delegate (refresh token)
-func GenerateTokens(iss int) (response LoginResponse, err error) {
+func GenerateTokens(iss int, role string) (response LoginResponse, err error) {
 	// Get the admin_signingkey
 	signing_key, err := GetSettingString("admin_signingkey")
 	if err != nil {
@@ -144,7 +138,7 @@ func GenerateTokens(iss int) (response LoginResponse, err error) {
 		return
 	}
 
-	jwt, err := utils.GenerateJWTToken(signing_key, jwt_exp, iss, permissions)
+	jwt, err := utils.GenerateJWTToken(signing_key, jwt_exp, iss, role)
 	if err != nil {
 		return
 	}

@@ -7,9 +7,8 @@ import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import routes from './routes';
-import configureStore from './store/configureStore';
+import store from './store';
 
-const store = configureStore();
 const browserHistory = useRouterHistory(createBrowserHistory)({
 	basename: '/admin'
 });

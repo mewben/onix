@@ -1,10 +1,10 @@
 var path = require('path');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
 	devtool: 'cheap-module-eval-source-map',
 	entry: [
-		// Temporary fix for stateless components not hot-reloading
 		'webpack-hot-middleware/client?reload=true',
 		'./admin/src/index'
 	],
@@ -15,13 +15,14 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
-		new webpack.HotModuleReplacementPlugin()
-		// new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+		new webpack.NoErrorsPlugin()
 	],
 	resolve: {
 		extensions: ['', '.js', '.jsx', '.scss', '.css'],
 		alias: {
-			styles: path.resolve(__dirname, 'admin', 'assets', 'styles'),
+			styles: path.resolve(__dirname, 'admin', 'assets', 'scss'),
 			root: __dirname
 		}
 	},
@@ -42,11 +43,14 @@ module.exports = {
 				include: path.join(__dirname, 'admin', 'src')
 			}, {
 				test: /\.s?css$/,
-				loaders: ['style-loader', 'css-loader', 'sass-loader']
+				loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
 			}, {
 				test: /\.json$/,
 				loader: 'json-loader'
 			}
 		]
+	},
+	postcss: function() {
+		return [autoprefixer];
 	}
 };

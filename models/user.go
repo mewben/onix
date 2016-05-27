@@ -57,6 +57,7 @@ type Me struct {
 	Slug     string `json:"slug"`
 	Image    string `json:"image"`
 	Status   string `json:"status"`
+	Role     string `json:"role"`
 }
 
 // ====== Returns
@@ -69,10 +70,15 @@ type Me struct {
 // 3. Check if user active
 // 4. Generate jwt
 // 5. Generate rft
-func (*User) Login(payload LoginPayload) (response interface{}, err error) {
+func (*User) Login(payload LoginPayload) (response LoginResponse, err error) {
 	var (
-		me   Me
-		user User
+		me                 Me
+		user               User
+		q_update_lastlogin = `
+			UPDATE ` + TUSERS + `
+			SET last_login = CURRENT_TIMESTAMP
+			WHERE id = $1;
+		`
 	)
 
 	// 1. Get Me
@@ -95,21 +101,15 @@ func (*User) Login(payload LoginPayload) (response interface{}, err error) {
 	}
 
 	// 4. Generate Tokens
-	response, err := GenerateTokens(me.Id)
+	response, err = GenerateTokens(me.Id, me.Role)
 
-	// 4. jwt
-	// Get the signingkey
-	signingkey, err := utils.GetConfigString("admin_signingkey")
-	if err != nil {
+	// 7. Update last_login
+	if _, err = db.Conn.Exec(q_update_lastlogin, me.Id); err != nil {
 		return
 	}
-	jwt, err := utils.GenerateJWTToken(signingkey, payload.Tz, me)
-	if err != nil {
-		return
-	}
-	// 5. rft
 
-	response = me
+	response.Me = me
+
 	return
 }
 
@@ -132,6 +132,34 @@ func (*User) GetMe(username string) (response Me, err error) {
 	)
 
 	if err = db.Conn.Get(&response, q_me, username); err != nil {
+		if err == sql.ErrNoRows {
+			err = errors.New(utils.E_WRONG_CRED)
+		}
+		return
+	}
+
+	return
+}
+
+// ===== Return Me By Id
+func (*User) GetMeById(id int) (response Me, err error) {
+	var (
+		q_me = `
+			SELECT
+				id,
+				username,
+				password,
+				email,
+				name,
+				slug,
+				image,
+				status
+			FROM ` + TUSERS + `
+			WHERE id = $1;
+		`
+	)
+
+	if err = db.Conn.Get(&response, q_me, id); err != nil {
 		if err == sql.ErrNoRows {
 			err = errors.New(utils.E_WRONG_CRED)
 		}

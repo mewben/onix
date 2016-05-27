@@ -7,21 +7,23 @@ class PostEditor extends Component {
 		super(props);
 
 		this.state = {
-			value: RichTextEditor.createValueFromString(props.value, 'html'),
-			format: 'string'
+			input: RichTextEditor.createValueFromString(props.value, 'html'),
+			format: 'visual'
 		};
 	}
 
-	_onChange = (value) => {
-		this.setState({value});
-		// Notify React-Formal
-		this.props.onChange(value.toString('html'));
+	_onBlur = () => {
+		this.props.onChange(this.state.input.toString('html'));
+	};
+
+	_onChange = (input) => {
+		this.setState({input});
 	};
 
 	_onChangeSource = (e) => {
-		let { format, value } = this.state;
+		let { format, input } = this.state;
 		this.setState({
-			value: value.setContentFromString(e.target.value, format)
+			input: input.setContentFromString(e.target.value, format)
 		});
 	};
 
@@ -38,7 +40,7 @@ class PostEditor extends Component {
 					<li className="nav-item">
 						<button
 							type="button"
-							onClick={this._setFormat.bind('this', 'string')}
+							onClick={this._setFormat.bind('this', 'visual')}
 							className="btn nav-link active">Visual</button>
 					</li>
 					<li className="nav-item">
@@ -53,20 +55,20 @@ class PostEditor extends Component {
 	}
 
 	_renderEditor() {
-		let { format, value } = this.state;
-		if (format === 'string') {
+		let { format, input } = this.state;
+		if (format === 'visual') {
 			return (
 				<RichTextEditor
-					value={value}
+					value={input}
 					onChange={this._onChange}
-					onBlur={this.props.onChange} />
+					onBlur={this._onBlur} />
 			);
 		} else if (format === 'html') {
 			return (
 				<textarea
-					value={value.toString('html')}
+					value={input.toString('html')}
 					onChange={this._onChangeSource}
-					onBlur={this.props.onChange}
+					onBlur={this._onBlur}
 					rows="20"
 					className="form-control code"></textarea>
 			);

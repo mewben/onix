@@ -7,13 +7,10 @@ import (
 
 	"github.com/lib/pq"
 	"github.com/mewben/db-go-env"
-
-	"projects/onix/utils"
 )
 
 type Content struct {
 	Id              int
-	Uuid            string
 	Title           string
 	Slug            string
 	Body            sql.NullString
@@ -39,7 +36,6 @@ func CreateContent(payload ContentPayload) (res interface{}, err error) {
 		model    Content
 		q_insert = `
 			INSERT INTO content (
-				uuid,
 				title,
 				slug,
 				author_id,
@@ -47,7 +43,6 @@ func CreateContent(payload ContentPayload) (res interface{}, err error) {
 				updated_by,
 				published_by
 			) VALUES (
-				:uuid,
 				:title,
 				:slug,
 				:author_id,
@@ -69,7 +64,6 @@ func CreateContent(payload ContentPayload) (res interface{}, err error) {
 	log.Println("tags:", payload.Tags)
 
 	// set values
-	model.Uuid = utils.GenerateUUID()
 	model.Title = payload.Title
 	model.Slug = payload.Slug
 	model.AuthorId = payload.Iss

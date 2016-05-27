@@ -34,7 +34,11 @@ class TagsEditor extends Component {
 		this.setState({
 			values: tags
 		});
-		this.props.onChange(tags);
+		// this.props.onChange(tags);
+	};
+
+	_onBlur = () => {
+		console.log('blur', this.state.values);
 	};
 
 	render() {
@@ -42,7 +46,7 @@ class TagsEditor extends Component {
 
 		return (
 			<MultiSelect
-				delimiters={[188]} // hello, there, how
+				theme="bootstrap3"
 				createFromSearch={createTags}
 				values={values}
 				options={[{
@@ -53,6 +57,7 @@ class TagsEditor extends Component {
 					value: 'tag-2'
 				}]}
 				onValuesChange={this._onChange}
+				onBlur={this._onBlur}
 			/>
 		);
 	}
