@@ -20,9 +20,9 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 func Setup(e *echo.Echo) {
 	//var t Template
 
-	//t.templates, _ = template.ParseGlob("public/themes/" + Theme + "/*.tmpl")
+	//t.templates, _ = template.ParseGlob("public/themes/" + Theme + "/*.html")
 	t := &Template{
-		templates: template.Must(template.ParseGlob("public/themes/" + Theme + "/*.tmpl")),
+		templates: template.Must(template.ParseGlob("public/themes/" + Theme + "/*.html")),
 	}
 
 	//e.Index("public/themes/" + Theme + "/index.html")

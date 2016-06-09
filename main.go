@@ -72,7 +72,11 @@ func main() {
 		api.Use(corsEnabled)
 	}
 
-	app.Static("/admin", "public/admin")
+	// admin routing
+	// app.Static("/admin", "public/admin")
+	app.File("/admin/*", "public/admin/index.html")
+	app.Static("/admin/assets", "public/admin/assets")
+	app.Static("/tinymce", "public/tinymce")
 
 	// Public
 	// Setup Theme

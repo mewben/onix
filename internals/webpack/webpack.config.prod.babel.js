@@ -15,8 +15,9 @@ module.exports = require('./webpack.config.base.babel')({
 	],
 	// Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
 	output: {
-		filename: '[name].[chunkhash].js',
-		chunkFilename: '[name].[chunkhash].chunk.js',
+		filename: 'assets/[name].[chunkhash].js',
+		chunkFilename: 'assets/[name].[chunkhash].chunk.js',
+		publicPath: '/admin/',
 	},
 
   // We use ExtractTextPlugin so we get a seperate CSS file instead
@@ -73,6 +74,6 @@ module.exports = require('./webpack.config.base.babel')({
 		}),
 
     // Extract the CSS into a seperate file
-		new ExtractTextPlugin('[name].[contenthash].css'),
+		new ExtractTextPlugin('assets/[name].[contenthash].css'),
 	],
 })

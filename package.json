@@ -5,8 +5,8 @@
   "main": "gulpfile.babel.js",
   "scripts": {
     "client": "cross-env NODE_ENV=development node dev-server",
-    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.babel.js --color -p --json | webpack-bundle-size-analyzer",
-    "prebuild": "rimraf ./public/*",
+    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.babel.js --color -p && cp -R internals/tinymce public/tinymce",
+    "prebuild": "rimraf ./public/admin/*",
     "server": "gulp server",
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.9.1",
+    "draft-js": "^0.7.0",
     "moment": "^2.13.0",
     "nprogress": "^0.2.0",
     "react": "^15.1.0",
@@ -88,6 +89,7 @@
     "react-router-redux": "^4.0.5",
     "react-rte": "^0.3.0",
     "react-selectize": "^2.0.2",
+    "react-tinymce": "^0.5.1",
     "redux": "^3.5.2",
     "redux-api-middleware": "^1.0.2",
     "redux-thunk": "^2.1.0",

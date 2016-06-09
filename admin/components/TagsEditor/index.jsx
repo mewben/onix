@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import { connect } from 'react-redux'
 import { MultiSelect } from 'react-selectize'
 
 let createTags = (options, values, search) => {
@@ -57,7 +58,6 @@ class TagsEditor extends Component {
 			/>
 		)
 	}
-
 }
 
 TagsEditor.propTypes = {
@@ -68,8 +68,10 @@ TagsEditor.propTypes = {
 }
 
 function mapStateToProps(state) {
-	selectFetched: state.tag.get('fetched'),
-	selectTags: state.tag.get('options').toJS(),
+	return {
+		selectFetched: state.tag.get('fetched'),
+		selectTags: state.tag.get('options').toJS(),
+	}
 }
 
 export default connect(mapStateToProps)(TagsEditor)

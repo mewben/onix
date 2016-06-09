@@ -7,7 +7,7 @@ import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Button from 'react-bootstrap/lib/Button'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 
-import PostEditor from 'components/PostEditor'
+import PostEditor from 'components/PostEditorTinyMCE'
 import TagsEditor from 'components/TagsEditor'
 import PublishedAt from 'components/PublishedAt'
 

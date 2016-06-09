@@ -3,7 +3,7 @@ import { fromJS } from 'immutable'
 const initialState = fromJS({
 	items: [],
 	options: [],
-	fetched: false
+	fetched: false,
 })
 
 export default function tag(state = initialState, action) {

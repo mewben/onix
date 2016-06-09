@@ -136,4 +136,5 @@ gulp.task('server:build', () => {
 
 gulp.task('server:watch', () => {
 	gulp.watch('./**/*.go', ['server:spawn']).on('change', logChanges)
+	gulp.watch('./**/*.html', ['server:spawn']).on('change', logChanges)
 })

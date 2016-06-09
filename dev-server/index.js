@@ -29,6 +29,8 @@ app.use(webpackHotMiddleware(compiler))
 // artifacts, we use it instead
 const fs = wpdevmiddleware.fileSystem
 
+app.use('/tinymce', express.static('internals/tinymce'))
+
 app.get('*', (req, res) => {
 	const file = fs.readFileSync(path.join(compiler.outputPath, 'index.html'))
 	res.send(file.toString())

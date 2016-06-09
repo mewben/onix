@@ -6,8 +6,8 @@ module.exports = (options) => ({
 
 	// merge output with dev output
 	output: Object.assign({
-		path: path.resolve(process.cwd(), 'public'),
-		publicPath: '/',
+		path: path.resolve(process.cwd(), 'public', 'admin'),
+		publicPath: '/assets',
 	}, options.output),
 
 	module: {
