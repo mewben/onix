@@ -4,14 +4,15 @@ import (
 	"encoding/json"
 	"os"
 
+	"projects/onix/controllers"
+	"projects/onix/theme"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/fasthttp"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"github.com/mewben/config-echo"
 	"github.com/mewben/db-go-env"
-	"projects/onix/controllers"
-	"projects/onix/theme"
 )
 
 // Initialize Port and DB Connection config
@@ -47,31 +48,35 @@ func main() {
 	app := echo.New()
 
 	app.Use(middleware.Recover())
-	app.Use(middleware.Logger())
 	app.Use(middleware.Gzip())
-	//app.Use(middleware.Static("public"))
+	app.Use(middleware.Secure())
+	app.Use(middleware.BodyLimit("100K"))
+
+	api := app.Group("/api")
+
+	if config.Mode == "dev" {
+		// Enable Debug
+		app.Use(middleware.Logger())
+		app.SetDebug(true)
+		corsEnabled := middleware.CORSWithConfig(middleware.CORSConfig{
+			AllowHeaders: []string{
+				echo.HeaderOrigin,
+				echo.HeaderContentType,
+				echo.HeaderAcceptEncoding,
+				echo.HeaderAuthorization,
+			},
+		})
+		// Enable CORS /
+		app.Use(corsEnabled)
+		// Enable CORS /api
+		api.Use(corsEnabled)
+	}
 
 	app.Static("/admin", "public/admin")
 
 	// Public
 	// Setup Theme
 	theme.Setup(app)
-
-	api := app.Group("/api")
-
-	if config.Mode == "dev" {
-		// Enable Debug
-		app.SetDebug(true)
-		cors_enabled := middleware.CORSWithConfig(middleware.CORSConfig{
-			AllowHeaders: []string{
-				echo.HeaderOrigin,
-			},
-		})
-		// Enable CORS /
-		app.Use(cors_enabled)
-		// Enable CORS /api
-		api.Use(cors_enabled)
-	}
 
 	users := controllers.UsersController{}
 	app.Post("/auth/login", users.Login)
@@ -82,7 +87,7 @@ func main() {
 		SigningKey:    []byte("evdzpwadminsing"),
 		Extractor:     middleware.JWTFromHeader,
 	})) */
-	ApiRoutes(api)
+	APIRoutes(api)
 
 	// ======= SITES =====
 	site := controllers.SiteController{}
@@ -91,17 +96,22 @@ func main() {
 	app.Run(fasthttp.New(config.Port))
 }
 
+// APIRoutes definition
 // ========== API ROUTES ======
-func ApiRoutes(api *echo.Group) {
+func APIRoutes(api *echo.Group) {
 
 	// ======= ADMIN API ======
 	admin := controllers.AdminController{}
-	api.Get("/utctime", admin.GetUTCTime)
+	api.Get("/time", admin.GetTime)
+
+	posts := controllers.PostsController{}
+	api.GET("/posts/:id", posts.GetOne)
+	api.POST("/posts", posts.Save)
 
 	// CRUD /api/tags
-	/* tags := controllers.TagsController{}
+	tags := controllers.TagsController{}
 	api.Get("/tags", tags.Get)
-	api.Post("/tags", tags.Save)
+	/* api.Post("/tags", tags.Save)
 	api.Put("/tags/:id", tags.Update)
 	api.Delete("/tags/:id", tags.Destroy)
 	*/

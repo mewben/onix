@@ -1,0 +1,48 @@
+.notifications-bc {
+
+	position: fixed;
+	max-width: 500px;
+	min-width: 300px;
+	left: 50%;
+	bottom: 7px;
+	transform: translateX(-50%);
+	z-index: 10000;
+
+	.notification {
+		color: #fff;
+		font-size: 14px;
+		padding: 10px 30px 10px 15px;
+		border-radius: 2px;
+	}
+
+	.notification-dismiss {
+		position: absolute;
+		top: 4px;
+		right: 7px;
+		cursor: pointer;
+	}
+
+	.notification-visible,
+	.notification-hidden {
+		transition: all 0.2s cubic-bezier(0.1, 0.7, 0.1, 1);
+		//transition: margin 0.3s ease-in-out;
+	}
+
+	.notification-visible {
+		opacity: 1;
+		margin-top: 0;
+	}
+
+	.notification-hidden {
+		opacity: 0;
+		margin-bottom: -30px;
+	}
+
+	.notification-error {
+		background-color: #cc3300;
+	}
+
+	.notification-success {
+		background-color: $brand-success;  // #8da85e;
+	}
+}

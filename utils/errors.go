@@ -1,6 +1,7 @@
 package utils
 
 const (
+	E_DATEINVALID     = "Date is invalid."
 	E_SESSION_EXPIRED = "Session expired. Please login again."
 	E_WRONG_CRED      = "Wrong username/password."
 	E_USER_INACTIVE   = "User is not active."

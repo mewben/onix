@@ -1,0 +1,98 @@
+label {
+	font-weight: normal;
+}
+
+.form-control,
+.form-control:focus {
+	box-shadow: none;
+	border-width: 2px;
+}
+
+.radio, .checkbox {
+	margin: 0;
+}
+
+&::-moz-placeholder {
+	color: darken($gray-lighter, 15%) !important;
+	font-size: $font-size-base;
+	font-weight: normal !important;
+	opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+}
+&:-ms-input-placeholder { color: darken($gray-lighter, 15%) !important; font-size: $font-size-base; font-weight: normal !important; } // Internet Explorer 10+
+&::-webkit-input-placeholder  { color: darken($gray-lighter, 15%) !important; font-size: $font-size-base; font-weight: normal !important; } // Safari and Chrome
+
+.btn {
+	font-size: 11px;
+	font-weight: 400;
+	text-transform: uppercase;
+	height: 32px;
+	line-height: 30px;
+	padding: 0 15px;
+	letter-spacing: 1px;
+	border-radius: 2px;
+}
+.input-group .btn {
+	height: 34px;
+}
+
+.btn-icon {
+	background-color: rgba(0,0,0,0);
+	//color: #777;
+	//color: $brand-danger;
+	font-size: 17px;
+	line-height: 17px;
+	padding: 0 20px;
+	margin: 0;
+	border: 0;
+	color: $gray-light;
+
+	&.danger {
+		color: $brand-danger;
+		font-size: 20px;
+		line-height: 20px;
+	}
+
+	&:hover {
+		color: #000;
+		background-color: rgba(0,0,0,0);
+	}
+}
+
+.navbar-static-top {
+	border-width: 0 0 2px;
+}
+
+.form-group.search {
+	padding: 0 50px;
+}
+
+.table {
+	tr.nohover {
+		td {
+			padding-top: 30px;
+			border-top-width: 0;
+		}
+		&:hover {
+			background-color: inherit;
+		}
+	}
+
+	tr.subtotal {
+		&:hover {
+			background-color: inherit;
+		}
+	}
+}
+
+.modal-body {
+	padding: 20px;
+
+	.modal-close {
+		position: absolute;
+		right: 20px;
+	}
+
+	.modal-footer {
+		padding: 25px 0 0 0;
+	}
+}

@@ -7,12 +7,15 @@ import (
 	"projects/onix/utils"
 )
 
+// AdminController struct
 type AdminController struct{}
 
-func (*AdminController) GetUTCTime(c echo.Context) error {
-	if ret, err := models.GetUTCTime(); err != nil {
+// GetTime current
+func (*AdminController) GetTime(c echo.Context) error {
+	ret, err := models.GetTime()
+	if err != nil {
 		return c.JSON(400, utils.ErrMarshal(err.Error()))
-	} else {
-		return c.JSON(200, ret)
 	}
+
+	return c.JSON(200, ret)
 }

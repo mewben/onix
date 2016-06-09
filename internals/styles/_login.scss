@@ -1,0 +1,46 @@
+.login.overlay {
+	position: fixed;
+	overflow: auto;
+	text-align: center;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: rgba(255, 255, 255, 0.97);
+
+	&:before {
+		content: '';
+		display: inline-block;
+		height: 100%;
+		vertical-align: middle;
+		margin-right: -.25em;
+	}
+
+	.overlay-dialog {
+		display: inline-block;
+		vertical-align: middle;
+		outline: 0;
+		max-width: 620px;
+		padding: 100px 80px;
+		overflow: visible;
+	}
+
+	.overlay-title {
+		color: rgba(0,0,0,0.8);
+		font-size: 24px;
+		line-height: 1.1;
+		margin-bottom: 6px;
+	}
+
+	.overlay-content {
+		padding-top: 10px;
+		margin-bottom: 30px;
+		width: 280px;
+	}
+
+}

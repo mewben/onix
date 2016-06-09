@@ -1,10 +1,10 @@
 hash: dcc6bfc4d85a3afda76d113354aba719971597a895ac7e0bd5ec8c50fd5c7590
-updated: 2016-04-26T23:06:14.049495456+08:00
+updated: 2016-06-03T19:27:57.149122571+08:00
 imports:
 - name: github.com/dgrijalva/jwt-go
-  version: a2c85815a77d0f951e33ba4db5ae93629a1530af
+  version: 9b486c879bab3fde556ce8c27d9a2bb05d5b2c60
 - name: github.com/jmoiron/sqlx
-  version: 398dd5876282499cdfd4cb8ea0f31a672abe9495
+  version: a7f971fe8ea891a1a74ddb40c623f5722e28e8a8
   subpackages:
   - reflectx
 - name: github.com/klauspost/compress
@@ -18,22 +18,24 @@ imports:
 - name: github.com/klauspost/crc32
   version: 19b0b332c9e4516a6370a0456e6182c3b5036720
 - name: github.com/labstack/echo
-  version: fb8690d42bcb3a44f35c3483dc90e778e385a823
+  version: ad06aee0c17b90b73e2013956aa762973f0afea6
   subpackages:
   - engine/fasthttp
   - middleware
   - engine
+  - log
 - name: github.com/labstack/gommon
-  version: 4fae226dd67b1100622ab213e798e5ee4c5d4230
+  version: b5f03e345acd2096591b6f738cb8d2b9b3231c50
   subpackages:
   - log
+  - bytes
   - color
 - name: github.com/lib/pq
-  version: 3cd0097429be7d611bb644ef85b42bfb102ceea4
+  version: ee1442bda7bd1b6a84e913bdb421cb1874ec629d
   subpackages:
   - oid
 - name: github.com/mattn/go-colorable
-  version: bc69d6cebca8dd5675346a34a1c545b67dc74d5e
+  version: 9056b7a9f2d1f2d96498d6d146acd1f9d5ed3d59
 - name: github.com/mattn/go-isatty
   version: 56b76bdf51f7708750eac80fa38b952bb9f32639
 - name: github.com/mewben/config-echo
@@ -43,20 +45,20 @@ imports:
 - name: github.com/satori/go.uuid
   version: f9ab0dce87d815821e221626b772e3475a0d2749
 - name: github.com/valyala/fasthttp
-  version: 2a122714064d56e2f7935e226eef5d1bcb77a612
+  version: c09347e6deb9f55ef00a1cb7b2e80e3a2cdd0506
 - name: github.com/valyala/fasttemplate
   version: 3b874956e03f1636d171bda64b130f9135f42cff
 - name: golang.org/x/crypto
-  version: 285fb2ed20d1dc450fc743a1b3ff7c36bef372b9
+  version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
   subpackages:
   - bcrypt
   - blowfish
 - name: golang.org/x/net
-  version: b797637b7aeeed133049c7281bfa31dcc9ca42d6
+  version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
   subpackages:
   - context
 - name: golang.org/x/sys
-  version: f64b50fbea64174967a8882830d621a18ee1548e
+  version: 076b546753157f758b316e59bcb51e6807c04057
   subpackages:
   - unix
 devImports: []

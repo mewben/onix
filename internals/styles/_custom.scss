@@ -1,0 +1,157 @@
+svg {
+	margin-top: -3px;
+}
+.main-row {
+	min-height: 400px;
+}
+.italic {
+	font-style: italic;
+}
+.sm {
+	font-size: 0.9em;
+}
+.ReactModal__Overlay {
+	z-index: 2000;
+}
+
+.req {
+	color: $brand-danger;
+	font-weight: 700;
+}
+.m-a-3 {
+	margin-top: 3rem;
+	margin-bottom: 3rem;
+}
+.p-a-3 {
+	padding: 3rem;
+}
+.p-t-2 {
+	padding-top: 2rem;
+}
+
+.m-t-2 {
+	margin-bottom: 2rem;
+}
+.m-b-1 {
+	margin-bottom: 1rem;
+}
+.m-b-4 {
+	margin-bottom: 4rem;
+}
+
+
+// react-modal
+.modal-overlay {
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: rgba(0,0,0,0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	outline: none;
+
+	&.confirm {
+		background-color: rgba(0,0,0,0.8);
+	}
+}
+
+.modal-dialog {
+	outline: none;
+}
+
+// TODO responsive
+.modal-dialog.search {
+	width: 500px;
+	margin-top: 50px;
+}
+
+.modal-footer {
+	border-top: none;
+}
+
+.search-result {
+	font-size: 0.9rem;
+}
+.search-form {
+	padding: 10px;
+}
+
+.nav-tabs {
+	li {
+		float: left;
+		margin-bottom: -1px;
+
+		a {
+			margin-right: 2px;
+			border: 1px solid transparent;
+			padding: 10px 10px 0 10px;
+		}
+	}
+}
+
+.dot.active {
+	color: $brand-success;
+}
+
+#footer {
+	border-top: 1px solid $gray-lighter;
+	font-size: 12px;
+	color: $gray-light;
+	margin-top: 85px;
+	padding-top: 10px;
+}
+
+.navbar .icon a {
+	padding: 0 5px;
+	line-height: 48px;
+	font-size: 20px;
+}
+
+#footer .icon {
+	font-size: 20px;
+	padding: 10px;
+}
+
+.navbar-brand {
+	padding: 0 20px;
+	color: #fff;
+
+	.icon {
+		font-size: 32px;
+		line-height: 48px;
+		color: #fff;
+	}
+
+	sub {
+		color: #fff;
+		text-transform: uppercase;
+		font-size: 10px;
+		margin-left: -10px;
+	}
+}
+
+.btn-icon2 {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+// react-gridforms
+.grid-form {
+	[data-disabled="true"],
+	[data-disabled="true"]:hover,
+	fieldset[disabled] [data-row-span],
+	fieldset[disabled] [data-row-span] [data-field-span]:hover {
+		background-color: lighten($gray-lighter, 4%) !important;
+	}
+}
+
+.profile-pic {
+	border-radius: 50%;
+	height: 150px;
+	width: 150px;
+	border: 3px solid #fff;
+	box-shadow: 0 0 2px $gray-lighter;
+}
