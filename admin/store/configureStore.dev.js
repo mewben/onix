@@ -10,7 +10,7 @@ export default function configureStore(preloadedState) {
 		rootReducer,
 		preloadedState,
 		applyMiddleware(thunk, apiMiddleware, createLogger()),
-		window.devToolsExtension && window.devToolsExtension()
+		window.devToolsExtension ? window.devToolsExtension() : f => f
 	)
 
 	if (module.hot) {

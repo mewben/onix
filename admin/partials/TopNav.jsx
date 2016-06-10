@@ -9,7 +9,7 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer'
 import Logo from 'react-icons/lib/ti/globe'
 
 const TopNav = () => (
-	<Navbar staticTop>
+	<Navbar>
 		<Navbar.Header>
 			<Navbar.Brand>
 				<Link to="/"><span className="icon"><Logo /></span> Onix</Link>

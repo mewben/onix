@@ -72,6 +72,7 @@
     "babel-polyfill": "^6.9.1",
     "draft-js": "^0.7.0",
     "moment": "^2.13.0",
+    "normalizr": "^2.1.0",
     "nprogress": "^0.2.0",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",

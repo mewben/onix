@@ -64,7 +64,27 @@ class FormPost extends Component {
 		}
 	}
 
+	_renderTagsEditor() {
+		const { postModel } = this.props
+
+		if (!postModel.id) {
+			return null
+		}
+
+		return (
+			<FormGroup>
+				<label htmlFor="tags">Tags</label>
+				<TagsEditor
+					id="tags"
+					values={postModel.tags}
+					onChange={this._onChangeTag} />
+			</FormGroup>
+		)
+	}
+
 	_renderMainForm() {
+		const { postModel } = this.props
+
 		return (
 			<div>
 				<Field model="postModel.title">
@@ -81,14 +101,15 @@ class FormPost extends Component {
 						className="form-control"
 						placeholder="A Sub Title or Tag Line" />
 				</Field>
-				<Field model="postModel.body">
-					<PostEditor value="" onChange={this._onChangeBody} />
-				</Field>
+				<PostEditor value={postModel.body} onChange={this._onChangeBody} />
 			</div>
 		)
 	}
 
 	_renderSideForm() {
+		const { postModel } = this.props
+
+		console.log('postModel', postModel.tags)
 		return (
 			<div>
 				<div className="pull-right">
@@ -119,15 +140,7 @@ class FormPost extends Component {
 						<input type="text" id="image" className="form-control" />
 					</Field>
 				</FormGroup>
-				<FormGroup>
-					<Field model="postModel.tags">
-						<label htmlFor="tags">Tags</label>
-						<TagsEditor
-							id="tags"
-							value={[]}
-							onChange={this._onChangeTag} />
-					</Field>
-				</FormGroup>
+				{this._renderTagsEditor()}
 				<hr/>
 				<FormGroup>
 					<Field model="postModel.meta_title">

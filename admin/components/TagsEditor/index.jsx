@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { MultiSelect } from 'react-selectize'
 
+import { getOptions } from 'containers/Admin/reducer'
+
 let createTags = (options, values, search) => {
 	let labels = values.map((value) => {
 		return value.label
@@ -18,7 +20,8 @@ class TagsEditor extends Component {
 
 	constructor(props) {
 		super(props)
-		let values = props.value
+		let values = props.values || []
+		console.log('propsvalue', props.values)
 		if (values.length > 0) {
 			// transform to form { label: '', value: ''}
 			values = values.map((item) => {
@@ -47,6 +50,8 @@ class TagsEditor extends Component {
 		let { values } = this.state
 		const { selectTags } = this.props
 
+		console.log('values', values)
+		console.log('selectTags', selectTags)
 		return (
 			<MultiSelect
 				theme="bootstrap3"
@@ -61,7 +66,7 @@ class TagsEditor extends Component {
 }
 
 TagsEditor.propTypes = {
-	value: PropTypes.any,
+	values: PropTypes.any,
 	onChange: PropTypes.func,
 	selectFetched: PropTypes.bool,
 	selectTags: PropTypes.array,
@@ -70,7 +75,7 @@ TagsEditor.propTypes = {
 function mapStateToProps(state) {
 	return {
 		selectFetched: state.tag.get('fetched'),
-		selectTags: state.tag.get('options').toJS(),
+		selectTags: getOptions(state.entities),
 	}
 }
 

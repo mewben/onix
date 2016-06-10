@@ -3,6 +3,9 @@
 	"env": {
 		"development": {
 			"presets": ["react-hmre"]
+		},
+		"production": {
+			"presets": ["es2015", "react", "stage-0", "react-optimize"]
 		}
 	}
 }

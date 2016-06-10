@@ -57,9 +57,18 @@ label {
 		background-color: rgba(0,0,0,0);
 	}
 }
-
-.navbar-static-top {
+.navbar {
+	border-radius: 0;
 	border-width: 0 0 2px;
+	border-color: $accent-1;
+
+	.navbar-header {
+		background-color: $accent-1;
+
+		a {
+			color: #fff;
+		}
+	}
 }
 
 .form-group.search {

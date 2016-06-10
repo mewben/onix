@@ -5,14 +5,10 @@ import Loading from 'components/Loading'
 import FormContainer from './FormContainer'
 import { fetchPost } from './actions'
 import { fetchTags } from 'containers/Tags/actions'
+import { getPostByID } from 'containers/Admin/reducer'
 
-const PostsEdit = ({selectItem, params}) => {
-	let id = Number(params.id)
-
-	console.log('id', id)
-	console.log('item ', selectItem.toJS())
-
-	if (id !== selectItem.get('id')) {
+const PostsEdit = ({selectItem}) => {
+	if (!selectItem) {
 		return <Loading />
 	}
 
@@ -21,7 +17,6 @@ const PostsEdit = ({selectItem, params}) => {
 
 PostsEdit.propTypes = {
 	selectItem: PropTypes.object,
-	params: PropTypes.object,
 }
 
 PostsEdit.onEnter = (store) => {
@@ -32,9 +27,9 @@ PostsEdit.onEnter = (store) => {
 	}
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 	return {
-		selectItem: state.post.get('item'),
+		selectItem: getPostByID(state, ownProps.params.id),
 	}
 }
 
