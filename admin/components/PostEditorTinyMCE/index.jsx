@@ -1,5 +1,8 @@
 import React, { PropTypes, Component } from 'react'
+// import { findDOMNode } from 'react-dom'
 import TinyMCE from 'react-tinymce'
+import Tabs from 'react-bootstrap/lib/Tabs'
+import Tab from 'react-bootstrap/lib/Tab'
 
 class PostEditorTinyMCE extends Component {
 
@@ -8,7 +11,7 @@ class PostEditorTinyMCE extends Component {
 
 		this.state = {
 			input: props.value,
-			format: 'visual', // TODO persist this in localStorage
+			format: 'html', // TODO persist this in localStorage
 		}
 	}
 
@@ -27,8 +30,24 @@ class PostEditorTinyMCE extends Component {
 		this.props.onChange(body)
 	}
 
+	_handleTab = (key) => {
+		this.setState({
+			format: key,
+		})
+	}
+
 	_renderTabs() {
 		return (
+			<Tabs activeKey={this.state.format} onSelect={this._handleTab} id="controlled-tab-example" animation={false}>
+        <Tab eventKey={'html'} title="HTML">
+					{this._renderEditor()}
+				</Tab>
+				<Tab eventKey={'visual'} title="Visual">
+				{this._renderEditor()}
+				</Tab>
+      </Tabs>
+		)
+		/* return (
 			<div className="text-right">
 				<ul className="nav nav-tabs">
 					<li className="nav-item">
@@ -45,7 +64,7 @@ class PostEditorTinyMCE extends Component {
 					</li>
 				</ul>
 			</div>
-		)
+		) */
 	}
 
 	_renderEditor() {
@@ -71,6 +90,7 @@ class PostEditorTinyMCE extends Component {
 		} else {
 			return (
 				<textarea
+					ref="code"
 					defaultValue={input}
 					onBlur={this._onBlur.bind(this, '')}
 					className="code" />
@@ -82,7 +102,6 @@ class PostEditorTinyMCE extends Component {
 		return (
 			<div>
 				{this._renderTabs()}
-				{this._renderEditor()}
 			</div>
 		)
 	}

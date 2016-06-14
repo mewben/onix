@@ -5,22 +5,24 @@ import (
 	"time"
 
 	"github.com/mewben/db-go-env"
+
 	"projects/onix/utils"
 )
 
+// RefreshToken struct
 type RefreshToken struct {
-	Id        int
-	UserId    int `db:"user_id"`
+	ID        int `db:"id"`
+	UserID    int `db:"user_id"`
 	Token     string
 	ExpiresIn time.Time `db:"expires_in"`
 }
 
-// @params
+// GenerateRefreshToken @params
 // id -- user_id
-func GenerateRefreshToken(id int) (token string, exp int, err error) {
+func GenerateRefreshToken(id int) (token string, err error) {
 	var (
-		rft      RefreshToken
-		q_insert = `
+		rft     RefreshToken
+		qInsert = `
 			INSERT INTO ` + TREFRESHTOKENS + ` (
 				user_id,
 				token,
@@ -31,14 +33,14 @@ func GenerateRefreshToken(id int) (token string, exp int, err error) {
 				:expires_in
 			) RETURNING id;
 		`
-		q_delete = `
+		qDelete = `
 			DELETE FROM ` + TREFRESHTOKENS + `
 			WHERE user_id = $1;
 		`
 	)
 
 	// Get expiry of refreshtoken in minutes
-	exp, err = GetSettingInt("admin_session")
+	exp, err := GetSettingInt("admin_session")
 	if err != nil {
 		return
 	}
@@ -46,27 +48,27 @@ func GenerateRefreshToken(id int) (token string, exp int, err error) {
 	// GenerateRandomToken
 	token = utils.GenerateRandomToken()
 
-	rft.UserId = id
+	rft.UserID = id
 	rft.Token = token
 	rft.ExpiresIn = time.Now().Add(time.Minute * time.Duration(exp))
 
 	// Remove existing refresh token of this user first
-	if _, err = db.Conn.Exec(q_delete, id); err != nil {
+	if _, err = db.Conn.Exec(qDelete, id); err != nil {
 		return
 	}
 
-	stmt, err := db.Conn.PrepareNamed(q_insert)
+	stmt, err := db.Conn.PrepareNamed(qInsert)
 	if err != nil {
 		return
 	}
 
-	err = stmt.Get(&rft.Id, rft)
+	err = stmt.Get(&rft.ID, rft)
 
 	return
 }
 
-// Delete Refresh Token
-func DeleteRefreshToken(iss int, rft string) (response bool, err error) {
+// DeleteRefreshToken remove
+func DeleteRefreshToken(userID int, rft string) (response bool, err error) {
 	var (
 		q = `
 			DELETE FROM ` + TREFRESHTOKENS + `
@@ -75,19 +77,19 @@ func DeleteRefreshToken(iss int, rft string) (response bool, err error) {
 		`
 	)
 
-	_, err = db.Conn.Exec(q, iss, rft)
+	_, err = db.Conn.Exec(q, userID, rft)
 	response = true
 
 	return
 }
 
-// Delegate
+// Delegate renew token
 // jwt is expired, get a new jwt
-func Delegate(iss int, rft string) (response LoginResponse, err error) {
+func Delegate(payload DelegatePayload) (response LoginResponse, err error) {
 	var (
-		user          User
-		refresh_token RefreshToken
-		q_get         = `
+		user         User
+		refreshToken RefreshToken
+		qGet         = `
 			SELECT * FROM ` + TREFRESHTOKENS + `
 			WHERE user_id = $1
 				AND token = $2;
@@ -95,24 +97,24 @@ func Delegate(iss int, rft string) (response LoginResponse, err error) {
 	)
 
 	// get the rft
-	if err = db.Conn.Get(&refresh_token, q_get, iss, rft); err != nil {
+	if err = db.Conn.Get(&refreshToken, qGet, payload.UserID, payload.Rft); err != nil {
 		return
 	}
 
 	// Check if rft is expired
-	if refresh_token.ExpiresIn.Sub(time.Now()) < 0 {
+	if refreshToken.ExpiresIn.Sub(time.Now()) < 0 {
 		err = errors.New(utils.E_SESSION_EXPIRED)
 		return
 	}
 
 	// Get Me By id
-	me, err := user.GetMeById(iss)
+	me, err := user.GetMeByID(payload.UserID)
 	if err != nil {
 		return
 	}
 
 	// Generete tokens
-	response, err = GenerateTokens(iss, me.Role)
+	response, err = GenerateTokens(payload.UserID, me.Role)
 	if err != nil {
 		return
 	}
@@ -122,36 +124,34 @@ func Delegate(iss int, rft string) (response LoginResponse, err error) {
 	return
 }
 
-// Generate Tokens
-// when login
+// GenerateTokens when login
 // when delegate (refresh token)
-func GenerateTokens(iss int, role string) (response LoginResponse, err error) {
-	// Get the admin_signingkey
-	signing_key, err := GetSettingString("admin_signingkey")
+func GenerateTokens(userID int, role string) (response LoginResponse, err error) {
+	// Get the edp_signingkey
+	signingKey, err := GetSettingString("admin_signingkey")
 	if err != nil {
 		return
 	}
 
 	// Get the admin_jwt_exp
-	jwt_exp, err := GetSettingInt("admin_jwt_exp")
+	jwtExp, err := GetSettingInt("admin_jwt_exp")
 	if err != nil {
 		return
 	}
 
-	jwt, err := utils.GenerateJWTToken(signing_key, jwt_exp, iss, role)
+	jwt, err := utils.GenerateJWTToken(signingKey, jwtExp, userID, role)
 	if err != nil {
 		return
 	}
 
-	rft, rft_exp, err := GenerateRefreshToken(iss)
+	rft, err := GenerateRefreshToken(userID)
 	if err != nil {
 		return
 	}
 
 	response.Jwt = jwt
-	response.JwtExp = jwt_exp
+	response.JwtExp = jwtExp
 	response.Rft = rft
-	response.RftExp = rft_exp
 
 	return
 }

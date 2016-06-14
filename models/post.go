@@ -1,9 +1,11 @@
 package models
 
 import (
+	"errors"
 	"strconv"
 	"strings"
 
+	"github.com/extemporalgenome/slug"
 	"github.com/lib/pq"
 	"github.com/mewben/db-go-env"
 	"github.com/satori/go.uuid"
@@ -13,24 +15,24 @@ import (
 
 // Post struct
 type Post struct {
-	ID              int         `db:"id" json:"id"`
-	UUID            string      `db:"uuid" json:"uuid"`
-	Title           string      `json:"title"`
-	Subtitle        string      `json:"subtitle"`
-	Slug            string      `json:"slug"`
-	Body            string      `json:"body"`
-	Excerpt         string      `json:"excerpt"`
-	Type            string      `json:"type"`
-	Featured        bool        `json:"featured"`
-	PublishedAt     pq.NullTime `db:"published_at" json:"published_at"`
-	Image           string      `json:"image"`
-	Tags            []Tag       `json:"tags"`
-	AuthorID        int         `db:"author_id" json:"author_id"`
-	MetaTitle       string      `db:"meta_title" json:"meta_title"`
-	MetaDescription string      `db:"meta_description" json:"meta_description"`
-	Status          string      `json:"status"`
-	CreatedBy       int         `db:"created_by" json:"created_by"`
-	UpdatedBy       int         `db:"updated_by" json:"updated_by"`
+	ID              int          `db:"id" json:"id"`
+	UUID            string       `db:"uuid" json:"uuid"`
+	Title           string       `json:"title"`
+	Subtitle        string       `json:"subtitle"`
+	Slug            string       `json:"slug"`
+	Body            string       `json:"body"`
+	Excerpt         string       `json:"excerpt"`
+	Type            string       `json:"type"`
+	Featured        bool         `json:"featured"`
+	PublishedAt     pq.NullTime  `db:"published_at" json:"published_at"`
+	Image           string       `json:"image"`
+	Tags            []TagPayload `json:"tags"`
+	AuthorID        int          `db:"author_id" json:"author_id"`
+	MetaTitle       string       `db:"meta_title" json:"meta_title"`
+	MetaDescription string       `db:"meta_description" json:"meta_description"`
+	Status          string       `json:"status"`
+	CreatedBy       int          `db:"created_by" json:"created_by"`
+	UpdatedBy       int          `db:"updated_by" json:"updated_by"`
 }
 
 // PostPayload struct
@@ -48,13 +50,13 @@ type PostPayload struct {
 	AuthorID        int          `json:"author_id"`
 	MetaTitle       string       `json:"meta_title"`
 	MetaDescription string       `json:"meta_description"`
+	UpdatedBy       int          `db:"updated_by" json:"updated_by"`
 }
 
 // Create a post
 func (model *Post) Create(payload PostPayload, status string) (response Post, err error) {
 	var (
-		userID = 1
-		q      = `
+		q = `
 			INSERT INTO ` + TPOSTS + ` (
 				uuid,
 				title,
@@ -103,6 +105,9 @@ func (model *Post) Create(payload PostPayload, status string) (response Post, er
 	)
 
 	model.Status = status
+	if model.Status == "" {
+		model.Status = "draft"
+	}
 
 	// Prepare values
 	// fill and validate
@@ -133,7 +138,7 @@ func (model *Post) Create(payload PostPayload, status string) (response Post, er
 	}
 
 	// insert or delete tags
-	tagIDs, err := ProcessTags(payload.Tags, userID)
+	tagIDs, err := ProcessTags(payload.Tags, payload.AuthorID)
 	if err != nil {
 		tx.Rollback()
 		return
@@ -176,6 +181,153 @@ func (model *Post) Create(payload PostPayload, status string) (response Post, er
 	return
 }
 
+// Update post
+func (model *Post) Update(sid string, payload PostPayload, status string) (response Post, err error) {
+	var (
+		q = `
+			UPDATE ` + TPOSTS + `
+			SET title = :title,
+				subtitle = :subtitle,
+				slug = :slug,
+				body = :body,
+				excerpt = :excerpt,
+				featured = :featured,
+				published_at = :published_at,
+				image = :image,
+				meta_title = :meta_title,
+				meta_description = :meta_description,
+				status = :status,
+				updated_by = :updated_by
+			WHERE id = :id
+			RETURNING id;
+		`
+		qDeleteTags = `
+			DELETE FROM ` + TPOSTSTAGS + `
+			WHERE post_id = $1;
+		`
+		qInsertPostsTags = `
+			INSERT INTO ` + TPOSTSTAGS + ` (
+				post_id,
+				tag_id
+			) VALUES (
+				$1,
+				$2
+			);
+		`
+	)
+
+	// check if sid == payload.ID
+	if strconv.Itoa(payload.ID) != sid {
+		err = errors.New(utils.E_ID_NOT_MATCH)
+		return
+	}
+
+	model.Status = status
+	if model.Status == "" {
+		model.Status = "draft"
+	}
+
+	// Prepare values
+	// fill and validate
+	if err = model.fillAndValidate(payload, true); err != nil {
+		return
+	}
+
+	tx, err := db.Conn.Beginx()
+	if err != nil {
+		return
+	}
+
+	// update post
+	stmt, err := tx.PrepareNamed(q)
+	if err != nil {
+		tx.Rollback()
+		return
+	}
+
+	if err = stmt.Get(&model.ID, model); err != nil {
+		tx.Rollback()
+		return
+	}
+
+	// insert or delete tags
+	tagIDs, err := ProcessTags(payload.Tags, payload.UpdatedBy)
+	if err != nil {
+		tx.Rollback()
+		return
+	}
+
+	// get id of the tags that were not newly created
+	for _, pTag := range payload.Tags {
+		if !pTag.NewOption {
+			// try to convert value to int
+			id, err2 := strconv.Atoi(pTag.Value)
+			if err2 != nil {
+				err = err2
+				tx.Rollback()
+				return
+			}
+
+			// append to newly created tag ids
+			tagIDs = append(tagIDs, id)
+		}
+	}
+
+	// remove associated tags first
+	_, err = tx.Exec(qDeleteTags, model.ID)
+	if err != nil {
+		tx.Rollback()
+		return
+	}
+
+	// insert post tags id
+	for _, tagID := range tagIDs {
+		_, err = tx.Exec(qInsertPostsTags, model.ID, tagID)
+		if err != nil {
+			tx.Rollback()
+			return
+		}
+	}
+
+	// commit
+	err = tx.Commit()
+	if err != nil {
+		tx.Rollback()
+		return
+	}
+
+	response, err = model.GetOne(strconv.Itoa(model.ID))
+
+	return
+}
+
+// Get post
+// TODO: pagination
+func (*Post) Get(title string) (response []Post, err error) {
+	var (
+		q = `
+			SELECT
+				id,
+				title,
+				status,
+				published_at
+			FROM ` + TPOSTS + `
+			WHERE type = 'post'
+				AND title ILIKE $1
+			ORDER BY created_at DESC
+			LIMIT 100;
+		`
+	)
+
+	title = title + "%"
+
+	if err = db.Conn.Select(&response, q, title); err != nil {
+		return
+	}
+
+	return
+}
+
 // GetOne post
 // @returns post with tags
 func (*Post) GetOne(sid string) (response Post, err error) {
@@ -185,7 +337,10 @@ func (*Post) GetOne(sid string) (response Post, err error) {
 			WHERE id = $1;
 		`
 		qTags = `
-			SELECT T1.* FROM ` + TPOSTSTAGS + ` AS T0
+			SELECT
+				T1.id::text as value,
+				T1.name as label
+			FROM ` + TPOSTSTAGS + ` AS T0
 			INNER JOIN ` + TTAGS + ` AS T1
 				ON T1.id = T0.tag_id
 			WHERE T0.post_id = $1;
@@ -225,6 +380,11 @@ func (model *Post) fillAndValidate(payload PostPayload, isEdit bool) (err error)
 
 	model.Title = strings.TrimSpace(payload.Title)
 	model.Slug = strings.TrimSpace(payload.Slug)
+	if model.Slug == "" || !slug.IsSlugAscii(model.Slug) {
+		// generate slug
+		model.Slug = slug.Slug(model.Title)
+	}
+
 	model.Subtitle = strings.TrimSpace(payload.Subtitle)
 	model.Body = body
 	model.Featured = payload.Featured

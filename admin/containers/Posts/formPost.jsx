@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Form, Field, actions } from 'react-redux-form'
+import { Field, actions } from 'react-redux-form'
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Button from 'react-bootstrap/lib/Button'
@@ -11,8 +11,6 @@ import PostEditor from 'components/PostEditorTinyMCE'
 import TagsEditor from 'components/TagsEditor'
 import PublishedAt from 'components/PublishedAt'
 
-import { slugify } from 'utils/helpers'
-
 class FormPost extends Component {
 
 	// populate form if edit
@@ -21,8 +19,13 @@ class FormPost extends Component {
 
 		if (item) {
 			// normalize values to be consumed in our form
-			let model = item.set('published_at', moment(item.get('published_at').get('Time')).format('MM-DD-YYYY HH:MM'))
-			dispatch(actions.load('postModel', model.toJS()))
+			if (item.get('status') === 'published') {
+				let model = item.set('published_at', moment(item.get('published_at').get('Time')).format('MM-DD-YYYY HH:MM'))
+				dispatch(actions.load('postModel', model.toJS()))
+			} else {
+				let model = item.set('published_at', '')
+				dispatch(actions.load('postModel', model.toJS()))
+			}
 		} else {
 			// reset form
 			dispatch(actions.reset('postModel'))
@@ -30,14 +33,7 @@ class FormPost extends Component {
 	}
 
 	_onSubmit = (action) => {
-		// this.props.dispatch(actions.change('postModel.status', action))
 		this.props.onSubmit(action)
-	}
-
-	// if new, set the slug based on title
-	_onBlurTitle = () => {
-		// if new
-		this.props.dispatch(actions.change('postModel.slug', slugify(this.props.postModel.title)))
 	}
 
 	_onChangeBody = (body) => {
@@ -65,9 +61,9 @@ class FormPost extends Component {
 	}
 
 	_renderTagsEditor() {
-		const { postModel } = this.props
+		const { postModel, item } = this.props
 
-		if (!postModel.id) {
+		if (item && !postModel.id) {
 			return null
 		}
 
@@ -82,26 +78,31 @@ class FormPost extends Component {
 		)
 	}
 
-	_renderMainForm() {
-		const { postModel } = this.props
+	_renderPostEditor() {
+		const { postModel, item } = this.props
+
+		if (item && !postModel.id) {
+			return null
+		}
 
 		return (
+			<PostEditor value={postModel.body} onChange={this._onChangeBody} />
+		)
+	}
+
+	_renderMainForm() {
+		return (
 			<div>
-				<Field model="postModel.title">
-					<input
-						type="text"
-						placeholder="Your awesome Post Title"
-						className="form-control"
-						onBlur={this._onBlurTitle}
-						autoFocus />
-				</Field>
-				<Field model="postModel.subtitle">
-					<input
-						type="text"
-						className="form-control"
-						placeholder="A Sub Title or Tag Line" />
-				</Field>
-				<PostEditor value={postModel.body} onChange={this._onChangeBody} />
+				<div className="editor-header">
+					<Field model="postModel.title" className="editor-title">
+						<input
+							type="text"
+							placeholder="Your awesome Post Title"
+							className="title"
+							autoFocus />
+					</Field>
+				</div>
+				{this._renderPostEditor()}
 			</div>
 		)
 	}
@@ -116,7 +117,7 @@ class FormPost extends Component {
 					<ButtonToolbar>
 						<ButtonGroup>
 							<Button onClick={this._onSubmit.bind(this, 'draft')}>Save as Draft</Button>
-							<Button onClick={this._onSubmit.bind(this, 'published')} bsStyle="info">Publish</Button>
+							<Button onClick={this._onSubmit.bind(this, 'published')} bsStyle="success">Publish</Button>
 						</ButtonGroup>
 					</ButtonToolbar>
 				</div>
@@ -163,14 +164,16 @@ class FormPost extends Component {
 
 	render() {
 		return (
-			<Form model="postModel" className="row">
+			<div className="row editor">
 				<div className="col-sm-9">
-					{ this._renderMainForm() }
+					<div className="wrapper">
+						{ this._renderMainForm() }
+					</div>
 				</div>
 				<div className="col-sm-3">
 					{ this._renderSideForm() }
 				</div>
-			</Form>
+			</div>
 		)
 	}
 }

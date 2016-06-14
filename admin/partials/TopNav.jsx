@@ -1,27 +1,28 @@
 import React from 'react'
 import Link from 'react-router/lib/Link'
-import Navbar from 'react-bootstrap/lib/Navbar'
+import Navbar, { Header, Brand } from 'react-bootstrap/lib/Navbar'
 import Nav from 'react-bootstrap/lib/Nav'
 import NavItem from 'react-bootstrap/lib/NavItem'
 import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import MenuItem from 'react-bootstrap/lib/MenuItem'
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer'
+import IndexLinkContainer from 'react-router-bootstrap/lib/IndexLinkContainer'
 import Logo from 'react-icons/lib/ti/globe'
 
 const TopNav = () => (
 	<Navbar>
-		<Navbar.Header>
-			<Navbar.Brand>
-				<Link to="/"><span className="icon"><Logo /></span> Onix</Link>
-			</Navbar.Brand>
-		</Navbar.Header>
+		<Header>
+			<Brand>
+				<Link to="/posts"><span className="icon"><Logo /></span> Onix</Link>
+			</Brand>
+		</Header>
 		<Nav>
 			<LinkContainer to="/posts/new">
 				<NavItem eventKey={1}>New Post</NavItem>
 			</LinkContainer>
-			<LinkContainer to="/posts">
+			<IndexLinkContainer to="/posts">
 				<NavItem eventKey={2}>Posts</NavItem>
-			</LinkContainer>
+			</IndexLinkContainer>
 			<LinkContainer to="/tags">
 				<NavItem eventKey={3}>Tags</NavItem>
 			</LinkContainer>

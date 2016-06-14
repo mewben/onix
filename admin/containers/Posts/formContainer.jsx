@@ -7,6 +7,7 @@ import { savePost } from './actions'
 class FormContainer extends Component {
 
 	_onSubmit = (status) => {
+		console.log('postModelllll', this.props.selectInput)
 		this.props.savePost(this.props.selectInput, status)
 			.then((res) => {
 				this.context.router.push('/posts/' + res.payload.id + '/edit')

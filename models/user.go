@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"errors"
+	"log"
 	"time"
 
 	"github.com/lib/pq"
@@ -12,22 +13,29 @@ import (
 	"projects/onix/utils"
 )
 
+// LoginPayload struct
 type LoginPayload struct {
 	Username string
 	Password string
-	Tz       int
 }
 
+// DelegatePayload struct
+type DelegatePayload struct {
+	Rft    string
+	UserID int `json:"sub"`
+}
+
+// LoginResponse struct
 type LoginResponse struct {
 	Me     Me     `json:"me"`
 	Jwt    string `json:"jwt"`
 	JwtExp int    `json:"jwt_exp"`
 	Rft    string `json:"rft"`
-	RftExp int    `json:"rft_exp"`
 }
 
+// User struct
 type User struct {
-	Id              int
+	ID              int `db:"id" json:"id"`
 	Username        string
 	Password        string
 	Name            string
@@ -48,8 +56,9 @@ type User struct {
 	UpdatedAt       time.Time   `db:"updated_at"`
 }
 
+// Me struct
 type Me struct {
-	Id       int    `json:"id"`
+	ID       int    `db:"id" json:"id"`
 	Username string `json:"username"`
 	Password string `json:"-"`
 	Email    string `json:"email"`
@@ -60,7 +69,7 @@ type Me struct {
 	Role     string `json:"role"`
 }
 
-// ====== Returns
+// Login ====== Returns
 // - jwt
 // - rft
 // - me
@@ -70,11 +79,10 @@ type Me struct {
 // 3. Check if user active
 // 4. Generate jwt
 // 5. Generate rft
-func (*User) Login(payload LoginPayload) (response LoginResponse, err error) {
+func (user *User) Login(payload LoginPayload) (response LoginResponse, err error) {
 	var (
-		me                 Me
-		user               User
-		q_update_lastlogin = `
+		me               Me
+		qUpdateLastLogin = `
 			UPDATE ` + TUSERS + `
 			SET last_login = CURRENT_TIMESTAMP
 			WHERE id = $1;
@@ -101,10 +109,14 @@ func (*User) Login(payload LoginPayload) (response LoginResponse, err error) {
 	}
 
 	// 4. Generate Tokens
-	response, err = GenerateTokens(me.Id, me.Role)
+	response, err = GenerateTokens(me.ID, me.Role)
+	if err != nil {
+		log.Println("me", me)
+		return
+	}
 
 	// 7. Update last_login
-	if _, err = db.Conn.Exec(q_update_lastlogin, me.Id); err != nil {
+	if _, err = db.Conn.Exec(qUpdateLastLogin, me.ID); err != nil {
 		return
 	}
 
@@ -113,10 +125,10 @@ func (*User) Login(payload LoginPayload) (response LoginResponse, err error) {
 	return
 }
 
-// ===== Return Me
+// GetMe ===== Return Me
 func (*User) GetMe(username string) (response Me, err error) {
 	var (
-		q_me = `
+		qMe = `
 			SELECT
 				id,
 				username,
@@ -131,7 +143,7 @@ func (*User) GetMe(username string) (response Me, err error) {
 		`
 	)
 
-	if err = db.Conn.Get(&response, q_me, username); err != nil {
+	if err = db.Conn.Get(&response, qMe, username); err != nil {
 		if err == sql.ErrNoRows {
 			err = errors.New(utils.E_WRONG_CRED)
 		}
@@ -141,10 +153,10 @@ func (*User) GetMe(username string) (response Me, err error) {
 	return
 }
 
-// ===== Return Me By Id
-func (*User) GetMeById(id int) (response Me, err error) {
+// GetMeByID ===== Return Me By Id
+func (*User) GetMeByID(id int) (response Me, err error) {
 	var (
-		q_me = `
+		qMe = `
 			SELECT
 				id,
 				username,
@@ -159,12 +171,56 @@ func (*User) GetMeById(id int) (response Me, err error) {
 		`
 	)
 
-	if err = db.Conn.Get(&response, q_me, id); err != nil {
+	if err = db.Conn.Get(&response, qMe, id); err != nil {
 		if err == sql.ErrNoRows {
 			err = errors.New(utils.E_WRONG_CRED)
 		}
 		return
 	}
 
+	return
+}
+
+// ChangePassword of the logged user
+func (user *User) ChangePassword(userID int, old, new string) (response bool, err error) {
+	var (
+		q = `
+			UPDATE ` + TUSERS + `
+			SET password = $1,
+				updated_at = CURRENT_TIMESTAMP,
+				updated_by = $2;
+		`
+	)
+	// 1. Get user
+	me, err := user.GetMeByID(userID)
+	if err != nil {
+		return
+	}
+
+	// 2. Check if correct password
+	if bcrypt.CompareHashAndPassword([]byte(me.Password), []byte(old)) != nil {
+		// Wrong password
+		err = errors.New(utils.E_WRONG_CRED)
+		return
+	}
+
+	// 3. Change password
+	newHash, _ := bcrypt.GenerateFromPassword([]byte(new), 10)
+	newPass := string(newHash)
+	res, err := db.Conn.Exec(q, newPass, me.ID)
+	if err != nil {
+		return
+	}
+
+	aff, err := res.RowsAffected()
+	if err != nil {
+		return
+	}
+
+	if aff == 0 {
+		err = errors.New(utils.E_500)
+	}
+
+	response = true
 	return
 }

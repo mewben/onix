@@ -74,16 +74,18 @@ func main() {
 
 	// admin routing
 	// app.Static("/admin", "public/admin")
-	app.File("/admin/*", "public/admin/index.html")
 	app.Static("/admin/assets", "public/admin/assets")
 	app.Static("/tinymce", "public/tinymce")
+	app.File("/admin*", "public/admin/index.html")
+	app.File("/admin/*", "public/admin/index.html")
 
 	// Public
 	// Setup Theme
 	theme.Setup(app)
 
 	users := controllers.UsersController{}
-	app.Post("/auth/login", users.Login)
+	app.POST("/auth/login", users.Login)
+	app.POST("/auth/delegation", users.Delegate)
 
 	// get api routes
 	/* api.Use(middleware.JWTAuthWithConfig(middleware.JWTAuthConfig{
@@ -110,7 +112,9 @@ func APIRoutes(api *echo.Group) {
 
 	posts := controllers.PostsController{}
 	api.GET("/posts/:id", posts.GetOne)
+	api.GET("/posts", posts.Get)
 	api.POST("/posts", posts.Save)
+	api.PUT("/posts/:id", posts.Update)
 
 	// CRUD /api/tags
 	tags := controllers.TagsController{}

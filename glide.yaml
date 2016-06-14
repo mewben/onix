@@ -1,4 +1,6 @@
 package: projects/onix
+excludeDirs:
+- node_modules
 import:
 - package: github.com/labstack/echo
   subpackages:
@@ -8,5 +10,4 @@ import:
 - package: github.com/mewben/config-echo
 - package: github.com/mewben/db-go-env
 - package: github.com/satori/go.uuid
-excludeDirs:
-- node_modules
+- package: github.com/extemporalgenome/slug

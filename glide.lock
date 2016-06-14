@@ -1,10 +1,12 @@
-hash: dcc6bfc4d85a3afda76d113354aba719971597a895ac7e0bd5ec8c50fd5c7590
-updated: 2016-06-03T19:27:57.149122571+08:00
+hash: a7347448ea87c0f202013fa8f67126bbecac3a1dc6c94f7cca12b006d56d75e2
+updated: 2016-06-13T16:40:27.808823367+08:00
 imports:
 - name: github.com/dgrijalva/jwt-go
-  version: 9b486c879bab3fde556ce8c27d9a2bb05d5b2c60
+  version: c04502f106d7c5b3fae17c5da49a1bbdd3006b3c
+- name: github.com/extemporalgenome/slug
+  version: 0320c85e32e0015b090f08a5d1324d5ab6094f07
 - name: github.com/jmoiron/sqlx
-  version: a7f971fe8ea891a1a74ddb40c623f5722e28e8a8
+  version: e4a302b8d3a49ad2790f2232df7fcd668f54366f
   subpackages:
   - reflectx
 - name: github.com/klauspost/compress
@@ -18,14 +20,14 @@ imports:
 - name: github.com/klauspost/crc32
   version: 19b0b332c9e4516a6370a0456e6182c3b5036720
 - name: github.com/labstack/echo
-  version: ad06aee0c17b90b73e2013956aa762973f0afea6
+  version: 6e183fd3d8063a14da04fa4439c52fb6b84d1cdb
   subpackages:
   - engine/fasthttp
   - middleware
   - engine
   - log
 - name: github.com/labstack/gommon
-  version: b5f03e345acd2096591b6f738cb8d2b9b3231c50
+  version: e80f15d0ed893817003195acf022aa109bcd12c7
   subpackages:
   - log
   - bytes
@@ -43,22 +45,24 @@ imports:
 - name: github.com/mewben/db-go-env
   version: 6c872cf0330cd369d60a1c066df195d2669d17dd
 - name: github.com/satori/go.uuid
-  version: f9ab0dce87d815821e221626b772e3475a0d2749
+  version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/valyala/fasthttp
-  version: c09347e6deb9f55ef00a1cb7b2e80e3a2cdd0506
+  version: 8db7d05839b5f4d21d5da1fcb3897d294ff6fd9f
+  subpackages:
+  - fasthttputil
 - name: github.com/valyala/fasttemplate
   version: 3b874956e03f1636d171bda64b130f9135f42cff
 - name: golang.org/x/crypto
-  version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
+  version: f3241ce8505855877cc8a9717bd61a0f7c4ea83c
   subpackages:
   - bcrypt
   - blowfish
 - name: golang.org/x/net
-  version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
+  version: 3f122ce3dbbe488b7e6a8bdb26f41edec852a40b
   subpackages:
   - context
 - name: golang.org/x/sys
-  version: 076b546753157f758b316e59bcb51e6807c04057
+  version: 7f918dd405547ecb864d14a8ecbbfe205b5f930f
   subpackages:
   - unix
 devImports: []

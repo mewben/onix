@@ -6,7 +6,10 @@ import { Field, actions } from 'react-redux-form'
 class PublishedAt extends Component {
 
 	componentDidMount() {
-		this.props.dispatch(actions.change('postModel.published_at', this.props.time))
+		console.log('time', this.props.time)
+		if (this.props.time) {
+			this.props.dispatch(actions.change('postModel.published_at', this.props.time))
+		}
 	}
 
 	render() {

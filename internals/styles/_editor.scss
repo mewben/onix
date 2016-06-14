@@ -1,0 +1,68 @@
+.editor {
+	position: relative;
+
+	// TODO responsive
+	.wrapper {
+		width: 700px;
+		margin: 0 auto;
+	}
+
+	.editor-header {
+		position: relative;
+		padding-bottom: 20px;
+
+		.editor-title {
+			position: relative;
+		}
+		.editor-title:not(.is-focused):not(:focus):not(.is-loading)::after {
+			content: '';
+			display: block;
+			position: absolute;
+			user-select: none;
+			pointer-events: none;
+			background: linear-gradient(to right, rgba(255, 255, 255, 0), white 90%);
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: auto;
+			width: 20%;
+			height: auto;
+		}
+
+		.title {
+			color: $brand-primary;
+			font-size: 28px;
+			font-family: $font-family-serif;
+			font-weight: 400;
+			border: none;
+			outline: 0;
+			padding: 7px 20px 7px 0px;
+			width: 100%;
+		}
+	}
+
+	.nav-tabs {
+		padding-right: 20px;
+	}
+
+	.nav-tabs li {
+		float: right;
+
+		a {
+			padding: 5px 20px;
+			outline: 0;
+			font-size: 12px;
+		}
+	}
+
+	.code {
+		font-family: "Courier", monospace;
+		font-size: 14px;
+		height: 430px;
+		border: none;
+		resize: none;
+		padding: 32px 11px;
+		width: 100%;
+		outline: 0;
+	}
+}

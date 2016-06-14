@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable'
+/* import { fromJS } from 'immutable'
 import { normalize, Schema, arrayOf } from 'normalizr'
 
 const initialState = fromJS({
@@ -68,3 +68,4 @@ export {
 	getPostByID,
 	getTagByID,
 }
+*/

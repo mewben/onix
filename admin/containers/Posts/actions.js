@@ -1,8 +1,13 @@
 import { CALL_API } from 'redux-api-middleware'
-import { get, post } from 'utils/network'
+import { get, post, put } from 'utils/network'
 
 export const savePost = (payload, status) => {
 	let request = post('/posts?status=' + status, payload)
+
+	if (payload.id) {
+		// update
+		request = put(`/posts/${payload.id}?status=${status}`, payload)
+	}
 
 	request.types = ['POST_SAVE_REQ', 'POST_SAVE_SUCC', 'NOTIF_FAIL']
 
@@ -23,4 +28,11 @@ export const fetchPost = (id) => {
 			[CALL_API]: request,
 		})
 	}
+}
+
+export const fetchPosts = (q) => {
+	let request = get('/posts', q)
+	request.types = ['NOOP', 'POST_GET_SUCC', 'NOTIF_FAIL']
+
+	return { [CALL_API]: request }
 }

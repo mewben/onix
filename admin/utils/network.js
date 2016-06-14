@@ -35,12 +35,9 @@ export const logout = () => {
 }
 
 export const delegate = () => {
-	let session = JSON.parse(localStorage.getItem('session'))
 	let body = {
 		rft: localStorage.getItem('rft'),
 		sub: Number(localStorage.getItem('isLoggedIn')),
-		semcamp_id: Number(session.semcamp_id),
-		campus_id: Number(session.campus_id),
 	}
 	let req = {
 		endpoint: HOST + '/auth/delegation',

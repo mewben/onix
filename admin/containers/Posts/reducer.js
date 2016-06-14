@@ -8,6 +8,7 @@ const formPostState = {
 	subtitle: '',
 	slug: '',
 	body: '',
+	excerpt: '',
 	featured: false,
 	published_at: '',
 	status: 'draft',
@@ -19,6 +20,7 @@ const formPostState = {
 
 const initialState = fromJS({
 	loading: false,
+	items: [],
 	item: {},
 })
 
@@ -29,6 +31,9 @@ export default function post(state = initialState, action) {
 	switch (action.type) {
 		case 'POST_SAVE_REQ':
 			return state.set('loading', true)
+
+		case 'POST_GET_SUCC':
+			return state.set('items', fromJS(action.payload || []))
 
 		case 'POST_SAVE_SUCC':
 			return state

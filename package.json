@@ -5,8 +5,8 @@
   "main": "gulpfile.babel.js",
   "scripts": {
     "client": "cross-env NODE_ENV=development node dev-server",
-    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.babel.js --color -p && cp -R internals/tinymce public/tinymce",
-    "prebuild": "rimraf ./public/admin/*",
+    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.babel.js --color -p && cp -R internals/tinymce/* public/tinymce",
+    "prebuild": "rimraf ./public/admin/* && rimraf ./public/tinymce/*",
     "server": "gulp server",
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",

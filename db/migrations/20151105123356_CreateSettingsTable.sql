@@ -22,6 +22,12 @@ INSERT INTO settings (
 ) VALUES (
 	'admin_signingkey',
 	'evdzpwadminsing'
+), (
+	'admin_jwt_exp',
+	'5'
+), (
+	'admin_session',
+	'30'
 );
 
 -- +goose Down

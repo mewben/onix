@@ -10,7 +10,7 @@ export const serialize = (obj) => {
 	return pairs.join('&')
 }
 
-// slugify string
-export const slugify = (str, replacement = '-') => {
-	return str.toLowerCase().replace(/[-\s]+/g, replacement)
+// catch errors
+export const catchErr = (err) => {
+	console.error('Error catched:', err.message)
 }
