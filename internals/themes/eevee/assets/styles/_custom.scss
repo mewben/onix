@@ -1,0 +1,140 @@
+a {
+	transition: all 0.1s linear;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 300px;
+	background-color: $accent-2;
+	color: #fff;
+
+	.header-inner {
+		margin: 4em;
+		text-align: center;
+	}
+
+	.site-title {
+		color: $brand-primary;
+		font-size: 28px;
+		font-weight: 700;
+		text-decoration: none;
+		margin-bottom: 2em;
+		display: block;
+	}
+}
+
+.content {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 300px;
+	right: 0;
+
+	.content-inner {
+		max-width: 720px;
+		padding: 0 2em;
+		margin: 5em auto;
+		font-size: 18px;
+		letter-spacing: 0.16px;
+		line-height: 1.9em;
+		color: #3A4145;
+
+		p {
+			margin-bottom: 2em;
+		}
+	}
+
+	article {
+		border-bottom: 1px solid $gray-lighter;
+		padding-bottom: 3em;
+
+		.post-title a {
+			color: #000;
+
+			&:hover {
+				text-decoration: none;
+				color: $brand-primary;
+			}
+		}
+
+		.post-excerpt {
+			padding-top: 15px;
+			padding-bottom: 2em;
+		}
+
+		.read-more {
+			display: inline-block;
+			letter-spacing: 1px;
+			padding: 0 15px;
+			margin-top: 0.5em;
+			border-radius: 4px;
+			font-size: 0.7em;
+			background-color: $brand-primary;
+			font-family: $font-family-sans-serif;
+			color: #fff;
+			text-decoration: none;
+			text-transform: uppercase;
+
+			&:hover {
+				background-color: darken($brand-primary, 10%);
+			}
+		}
+
+		.post-meta {
+			margin-bottom: 3em;
+			color: $gray-light;
+			font-size: 14px;
+			text-transform: uppercase;
+		}
+	}
+}
+
+.pagination {
+	padding-top: 5em;
+	margin-bottom: 5em;
+	text-align: center;
+	font-size: 13px;
+	font-family: $font-family-sans-serif;
+	color: $gray-light;
+
+	a,
+	.page-number {
+		display: inline;
+		letter-spacing: 1px;
+		background-color: $brand-primary;
+		color: #fff;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: .5em 1em;
+		margin: 1em 0;
+		text-transform: uppercase;
+	}
+
+	a:hover {
+		background-color: darken($brand-primary, 10%);
+	}
+
+	.page-number {
+		background-color: $gray-lighter;
+		color: $gray-light;
+		margin-left: 3px;
+	}
+}
+
+.site-footer {
+	text-align: center;
+	color: $gray-light;
+	font-size: 0.7em;
+	border-top: 1px solid $gray-lighter;
+	padding-top: 2em;
+	margin-bottom: 4em;
+}
+
+.scrollable {
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}

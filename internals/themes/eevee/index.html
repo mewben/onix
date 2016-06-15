@@ -1,0 +1,18 @@
+{{define "index"}}
+<!doctype html>
+<html lang="{{ .Site.Language }}">
+{{template "head" . }}
+<body class="{{ .Meta.BodyClass }}">
+	{{template "header" .}}
+	<main class="content scrollable">
+		<div class="content-inner">
+			{{ if eq .Template "home" }}
+				{{template "home" .Data }}
+			{{ else if eq .Template "post" }}
+				{{template "post" .Data }}
+			{{end}}
+		</div>
+	</main>
+</body>
+</html>
+{{end}}

@@ -7,32 +7,41 @@ import (
 	"github.com/labstack/echo"
 )
 
+// Template struct
 type Template struct {
 	templates *template.Template
 }
 
+// Theme default
 var Theme = "eevee"
 
+// Render function
 func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-func Setup(e *echo.Echo) {
-	//var t Template
+// Setup theme
+func Setup(e *echo.Echo, mode string) {
+	var t Template
+	if mode == "dev" {
+		// development
+		t.templates = template.Must(template.ParseGlob("internals/themes/" + Theme + "/*.html"))
 
-	//t.templates, _ = template.ParseGlob("public/themes/" + Theme + "/*.html")
-	t := &Template{
-		templates: template.Must(template.ParseGlob("public/themes/" + Theme + "/*.html")),
+		e.Static("/assets", "internals/themes/"+Theme+"/assets")
+		e.File("/favicon.ico", "internals/themes/"+Theme+"favicon.ico")
+	} else {
+		// production
+		t.templates = template.Must(template.ParseGlob("public/themes/" + Theme + "/*.html"))
+
+		e.Static("/assets", "public/themes/"+Theme+"/assets")
+		e.File("/favicon.ico", "public/themes/"+Theme+"favicon.ico")
 	}
 
-	//e.Index("public/themes/" + Theme + "/index.html")
-	e.Static("/assets", "public/themes/"+Theme+"/assets")
-	//e.Favicon("public/themes/" + Theme + "favicon.ico")
-	e.File("/favicon.ico", "public/themes/"+Theme+"favicon.ico")
-	e.SetRenderer(t)
+	e.SetRenderer(&t)
 }
 
+// Change theme
 func Change(theme string, e *echo.Echo) {
 	Theme = theme
-	Setup(e)
+	Setup(e, "")
 }

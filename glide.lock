@@ -1,12 +1,12 @@
 hash: a7347448ea87c0f202013fa8f67126bbecac3a1dc6c94f7cca12b006d56d75e2
-updated: 2016-06-13T16:40:27.808823367+08:00
+updated: 2016-06-15T14:43:05.716128427+08:00
 imports:
 - name: github.com/dgrijalva/jwt-go
   version: c04502f106d7c5b3fae17c5da49a1bbdd3006b3c
 - name: github.com/extemporalgenome/slug
   version: 0320c85e32e0015b090f08a5d1324d5ab6094f07
 - name: github.com/jmoiron/sqlx
-  version: e4a302b8d3a49ad2790f2232df7fcd668f54366f
+  version: 4a933341a532f7d5bf05bea24de238734e033dfb
   subpackages:
   - reflectx
 - name: github.com/klauspost/compress
@@ -41,13 +41,13 @@ imports:
 - name: github.com/mattn/go-isatty
   version: 56b76bdf51f7708750eac80fa38b952bb9f32639
 - name: github.com/mewben/config-echo
-  version: bd68349f8624a3b42e21fd1ed87736bf6284c8b8
+  version: f958f1dfd8ad47aacccad3b6a454e2f724bae38c
 - name: github.com/mewben/db-go-env
   version: 6c872cf0330cd369d60a1c066df195d2669d17dd
 - name: github.com/satori/go.uuid
   version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/valyala/fasthttp
-  version: 8db7d05839b5f4d21d5da1fcb3897d294ff6fd9f
+  version: 33ed259db713ef4460de2ad4c9429d5bdc8385fd
   subpackages:
   - fasthttputil
 - name: github.com/valyala/fasttemplate
@@ -62,7 +62,12 @@ imports:
   subpackages:
   - context
 - name: golang.org/x/sys
-  version: 7f918dd405547ecb864d14a8ecbbfe205b5f930f
+  version: 62bee037599929a6e9146f29d10dd5208c43507d
   subpackages:
   - unix
+- name: golang.org/x/text
+  version: e4775119bd79944a15a741ac4be61e43509a70d9
+  subpackages:
+  - unicode/norm
+  - transform
 devImports: []

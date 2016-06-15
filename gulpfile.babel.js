@@ -5,6 +5,10 @@ const gulp = require('gulp')
 const { log, colors } = require('gulp-util')
 const notifier = require('node-notifier')
 const ip = require('ip')
+const sourcemaps = require('gulp-sourcemaps')
+const autoprefixer = require('gulp-autoprefixer')
+const sass = require('gulp-sass')
+const htmlmin = require('gulp-htmlmin')
 
 let env = require('./env.json')
 let server = null
@@ -52,6 +56,7 @@ gulp.task('default', ['client:serve', 'server:spawn', 'server:watch'], (cb) => {
 })
 
 gulp.task('server', ['server:spawn', 'server:watch'])
+gulp.task('server:dev', ['theme:style', 'server:spawn', 'theme:style:watch', 'server:watch'])
 
 gulp.task('client:serve', (cb) => {
 	let client = exec('cross-env NODE_ENV=development node dev-server', {async: true, silent: true})
@@ -134,7 +139,33 @@ gulp.task('server:build', () => {
 	}
 })
 
+gulp.task('theme:style', () => {
+	return gulp.src('internals/themes/eevee/assets/styles/style.scss')
+		.pipe(sourcemaps.init())
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(autoprefixer())
+		.pipe(sourcemaps.write())
+		.pipe(gulp.dest('internals/themes/eevee/assets/styles'))
+})
+
+gulp.task('theme:build', () => {
+	return gulp.src('assets/scss/main.scss')
+		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(autoprefixer())
+		.pipe(gulp.dest('build'))
+})
+
+gulp.task('html:minify', () => {
+	return gulp.src('public/themes/eevee/*.html')
+		.pipe(htmlmin({collapseWhitespace: true}))
+		.pipe(gulp.dest('public/themes/eevee'))
+})
+
+gulp.task('theme:style:watch', () => {
+	gulp.watch('internals/themes/**/*.scss', ['theme:style']).on('change', logChanges)
+})
+
 gulp.task('server:watch', () => {
 	gulp.watch('./**/*.go', ['server:spawn']).on('change', logChanges)
-	gulp.watch('./**/*.html', ['server:spawn']).on('change', logChanges)
+	gulp.watch('./internals/themes/**/*.html', ['server:spawn']).on('change', logChanges)
 })

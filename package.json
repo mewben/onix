@@ -5,9 +5,10 @@
   "main": "gulpfile.babel.js",
   "scripts": {
     "client": "cross-env NODE_ENV=development node dev-server",
-    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.babel.js --color -p && cp -R internals/tinymce/* public/tinymce",
-    "prebuild": "rimraf ./public/admin/* && rimraf ./public/tinymce/*",
+    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.babel.js --color -p && cp -R internals/tinymce/* public/tinymce && cp -R internals/themes/eevee/* public/themes/eevee && gulp html:minify",
+    "prebuild": "rimraf ./public/admin/* && rimraf ./public/tinymce/* && rimraf ./public/themes/eevee/*",
     "server": "gulp server",
+    "server:dev": "gulp server:dev",
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tunnel": "cross-env NODE_ENV=tunnel node dev-server"
@@ -49,6 +50,10 @@
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-sass": "^2.3.1",
+    "gulp-sourcemaps": "^1.6.0",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.19.0",
     "ip": "^1.1.3",

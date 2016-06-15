@@ -41,7 +41,7 @@ func init() {
 	// This sets the global Port string
 	// If you set an environment variable DATABASE_URL,
 	// it sets Mode = "prod" and uses the env Port instead
-	config.Setup(devConfig.SERVERPORT)
+	config.Setup(devConfig.SERVERPORT, "prod")
 }
 
 func main() {
@@ -81,7 +81,7 @@ func main() {
 
 	// Public
 	// Setup Theme
-	theme.Setup(app)
+	theme.Setup(app, config.Mode)
 
 	users := controllers.UsersController{}
 	app.POST("/auth/login", users.Login)
@@ -98,6 +98,7 @@ func main() {
 	// ======= SITES =====
 	site := controllers.SiteController{}
 	app.Get("/", site.Home)
+	app.Get("/:slug", site.Single)
 
 	app.Run(fasthttp.New(config.Port))
 }
