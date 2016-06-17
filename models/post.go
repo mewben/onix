@@ -197,7 +197,8 @@ func (model *Post) Update(sid string, payload PostPayload, status string) (respo
 				meta_title = :meta_title,
 				meta_description = :meta_description,
 				status = :status,
-				updated_by = :updated_by
+				updated_by = :updated_by,
+				updated_at = CURRENT_TIMESTAMP
 			WHERE id = :id
 			RETURNING id;
 		`

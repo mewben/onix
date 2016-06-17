@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"net"
+
 	"github.com/labstack/echo"
 
 	"projects/onix/models"
@@ -15,13 +17,29 @@ func (*UsersController) Login(c echo.Context) error {
 	var payload models.LoginPayload
 	var user models.User
 
-	if err := c.Bind(&payload); err != nil {
+	an, _, err := net.SplitHostPort(c.Request().RemoteAddress())
+	if err != nil {
+		return c.JSON(400, utils.ErrMarshal(err.Error()))
+	}
+
+	if err = c.Bind(&payload); err != nil {
 		return c.JSON(400, utils.ErrMarshal(err.Error()))
 	}
 
 	ret, err := user.Login(payload)
 	if err != nil {
-		return c.JSON(400, utils.ErrMarshal(err.Error()))
+		msg := err.Error()
+		// login failed
+		err = utils.ST.Infraction(an, "Login")
+		if err != nil {
+			msg = msg + " " + err.Error()
+			return c.JSON(400, utils.ErrMarshal(msg))
+		}
+
+		// auth fails, increment infraction
+		_, err = utils.ST.Strikes(an, "Login")
+
+		return c.JSON(400, utils.ErrMarshal(msg))
 	}
 
 	return c.JSON(200, ret)

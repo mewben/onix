@@ -7,7 +7,7 @@
     "client": "cross-env NODE_ENV=development node dev-server",
     "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.babel.js --color -p && cp -R internals/tinymce/* public/tinymce && cp -R internals/themes/eevee/* public/themes/eevee && gulp html:minify",
     "prebuild": "rimraf ./public/admin/* && rimraf ./public/tinymce/* && rimraf ./public/themes/eevee/*",
-    "server": "gulp server",
+    "server": "MODE=prod go run main.go",
     "server:dev": "gulp server:dev",
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",

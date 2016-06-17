@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 
 import PostList from 'components/PostList'
-import PostSearch from 'components/PostSearch'
+import Search from 'components/Search'
 import { fetchPosts } from './actions'
 
 class PostsList extends Component {
@@ -17,7 +17,9 @@ class PostsList extends Component {
 				<div>TODO: filters</div>
 				<div className="row">
 					<div className="col-sm-3 col-sm-offset-9 text-right">
-						<PostSearch onSubmit={this._onSearch} />
+						<Search
+							placeholder="Search Post Title..."
+							onSubmit={this._onSearch} />
 					</div>
 				</div>
 				<PostList />

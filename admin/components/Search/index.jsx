@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import InputGroup, { Button as IButton } from 'react-bootstrap/lib/InputGroup'
 import Button from 'react-bootstrap/lib/Button'
 
-class PostSearch extends Component {
+class Search extends Component {
 
 	_onSubmit = (e) => {
 		e.preventDefault()
@@ -11,7 +11,7 @@ class PostSearch extends Component {
 	}
 
 	render() {
-		const { loading } = this.props
+		const { loading, placeholder } = this.props
 		let b = loading ? 'Searching...' : 'Search'
 
 		return (
@@ -20,7 +20,7 @@ class PostSearch extends Component {
 					<input
 						type="text"
 						ref="search"
-						placeholder="Search Post..."
+						placeholder={placeholder}
 						className="form-control"
 						autoFocus />
 					<IButton>
@@ -35,9 +35,10 @@ class PostSearch extends Component {
 	}
 }
 
-PostSearch.propTypes = {
+Search.propTypes = {
 	loading: PropTypes.bool,
 	onSubmit: PropTypes.func,
+	placeholder: PropTypes.string,
 }
 
-export default PostSearch
+export default Search

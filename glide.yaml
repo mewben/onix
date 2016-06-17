@@ -11,3 +11,4 @@ import:
 - package: github.com/mewben/db-go-env
 - package: github.com/satori/go.uuid
 - package: github.com/extemporalgenome/slug
+- package: github.com/jaredfolkins/badactor

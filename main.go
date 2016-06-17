@@ -2,17 +2,23 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"os"
+	"time"
 
-	"projects/onix/controllers"
-	"projects/onix/theme"
-
+	"github.com/jaredfolkins/badactor"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/fasthttp"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"github.com/mewben/config-echo"
 	"github.com/mewben/db-go-env"
+
+	"projects/onix/controllers"
+	mw "projects/onix/middleware"
+	"projects/onix/models"
+	"projects/onix/theme"
+	"projects/onix/utils"
 )
 
 // Initialize Port and DB Connection config
@@ -37,15 +43,32 @@ func init() {
 	// setup postgres db connection
 	db.Setup(devConfig.DB)
 
+	// get mode from environment
+	mode := os.Getenv("MODE")
+
 	// setup port
 	// This sets the global Port string
 	// If you set an environment variable DATABASE_URL,
 	// it sets Mode = "prod" and uses the env Port instead
-	config.Setup(devConfig.SERVERPORT, "prod")
+	config.Setup(devConfig.SERVERPORT, mode)
 }
 
 func main() {
 	app := echo.New()
+	// create new Studio
+	utils.ST = badactor.NewStudio(1024) // studio capacity... RAM?
+
+	// add the rule to the stack
+	utils.ST.AddRule(mw.LoginRule)
+	err := utils.ST.CreateDirectors(1024)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//poll duration
+	dur := time.Minute * time.Duration(60)
+	// Start the reaper
+	utils.ST.StartReaper(dur)
 
 	app.Use(middleware.Recover())
 	app.Use(middleware.Gzip())
@@ -84,15 +107,17 @@ func main() {
 	theme.Setup(app, config.Mode)
 
 	users := controllers.UsersController{}
-	app.POST("/auth/login", users.Login)
+	app.POST("/auth/login", users.Login, mw.Jailer)
 	app.POST("/auth/delegation", users.Delegate)
 
+	// Get jwt signingkey
+	signingKey, err := models.GetSettingString("admin_signingkey")
+	if err != nil {
+		panic(err)
+	}
 	// get api routes
-	/* api.Use(middleware.JWTAuthWithConfig(middleware.JWTAuthConfig{
-		SigningMethod: middleware.AlgorithmHS256,
-		SigningKey:    []byte("evdzpwadminsing"),
-		Extractor:     middleware.JWTFromHeader,
-	})) */
+	api.Use(middleware.JWT([]byte(signingKey)))
+
 	APIRoutes(api)
 
 	// ======= SITES =====
@@ -119,11 +144,12 @@ func APIRoutes(api *echo.Group) {
 
 	// CRUD /api/tags
 	tags := controllers.TagsController{}
-	api.Get("/tags", tags.Get)
-	/* api.Post("/tags", tags.Save)
-	api.Put("/tags/:id", tags.Update)
-	api.Delete("/tags/:id", tags.Destroy)
-	*/
+	api.GET("/tags/:id", tags.GetOne)
+	api.GET("/tags", tags.Get)
+	api.POST("/tags", tags.Save)
+	api.PUT("/tags/:id", tags.Update)
+	/*	api.Delete("/tags/:id", tags.Destroy)
+	 */
 }
 
 /*

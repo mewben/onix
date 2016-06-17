@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { MultiSelect } from 'react-selectize'
 
+import { tagOptions } from 'containers/Tags/reducer'
+
 let createTags = (options, values, search) => {
 	let labels = values.map((value) => {
 		return value.label
@@ -61,7 +63,7 @@ TagsEditor.propTypes = {
 function mapStateToProps(state) {
 	return {
 		selectFetched: state.tag.get('fetched'),
-		selectTags: state.tag.get('options').toJS(),
+		selectTags: tagOptions(state.tag.get('items')),
 	}
 }
 

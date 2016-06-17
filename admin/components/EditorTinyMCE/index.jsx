@@ -4,14 +4,14 @@ import TinyMCE from 'react-tinymce'
 import Tabs from 'react-bootstrap/lib/Tabs'
 import Tab from 'react-bootstrap/lib/Tab'
 
-class PostEditorTinyMCE extends Component {
+class EditorTinyMCE extends Component {
 
 	constructor(props) {
 		super(props)
 
 		this.state = {
 			input: props.value,
-			format: 'html', // TODO persist this in localStorage
+			format: 'visual', // TODO persist this in localStorage
 		}
 	}
 
@@ -47,24 +47,6 @@ class PostEditorTinyMCE extends Component {
 				</Tab>
       </Tabs>
 		)
-		/* return (
-			<div className="text-right">
-				<ul className="nav nav-tabs">
-					<li className="nav-item">
-						<button
-							type="button"
-							onClick={this._setFormat.bind('this', 'visual')}
-							className="btn nav-link active">Visual</button>
-					</li>
-					<li className="nav-item">
-						<button
-							type="button"
-							onClick={this._setFormat.bind('this', 'html')}
-							className="btn nav-link">HTML</button>
-					</li>
-				</ul>
-			</div>
-		) */
 	}
 
 	_renderEditor() {
@@ -107,9 +89,9 @@ class PostEditorTinyMCE extends Component {
 	}
 }
 
-PostEditorTinyMCE.propTypes = {
+EditorTinyMCE.propTypes = {
 	value: PropTypes.string,
 	onChange: PropTypes.func,
 }
 
-export default PostEditorTinyMCE
+export default EditorTinyMCE

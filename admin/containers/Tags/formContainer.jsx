@@ -1,28 +1,27 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 
-import FormPost from './formPost'
-import { savePost } from './actions'
+import FormTag from './formTag'
+import { saveTag } from './actions'
 
 class FormContainer extends Component {
 
 	_onSubmit = (status) => {
-		this.props.savePost(this.props.selectInput, status)
+		this.props.saveTag(this.props.selectInput, status)
 			.then((res) => {
 				if (!res.error) {
-					this.context.router.push('/posts/' + res.payload.id + '/edit')
+					this.context.router.push('/tags/' + res.payload.id + '/edit')
 				}
 			})
 	}
 
 	render() {
-		const { selectTime, selectInput, item } = this.props
+		const { selectInput, item } = this.props
 
 		return (
-			<FormPost
+			<FormTag
 				item={item}
-				time={selectTime}
-				postModel={selectInput}
+				tagModel={selectInput}
 				onSubmit={this._onSubmit} />
 		)
 	}
@@ -34,19 +33,17 @@ FormContainer.contextTypes = {
 
 FormContainer.propTypes = {
 	item: PropTypes.object,
-	selectTime: PropTypes.string,
 	selectInput: PropTypes.object,
-	savePost: PropTypes.func,
+	saveTag: PropTypes.func,
 }
 
 function mapStateToProps(state) {
 	return {
-		selectTime: state.app.get('time'),
-		selectInput: state.postModel,
+		selectInput: state.tagModel,
 	}
 }
 
 export default connect(
 	mapStateToProps,
-	{ savePost },
+	{ saveTag },
 )(FormContainer)

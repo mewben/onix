@@ -1,12 +1,14 @@
-hash: a7347448ea87c0f202013fa8f67126bbecac3a1dc6c94f7cca12b006d56d75e2
-updated: 2016-06-15T14:43:05.716128427+08:00
+hash: c4f07a434b7cb195a95faeb7c459b2b5ba7c9871077d4c3cbd992b2d846a42cf
+updated: 2016-06-16T15:22:15.750868383+08:00
 imports:
 - name: github.com/dgrijalva/jwt-go
   version: c04502f106d7c5b3fae17c5da49a1bbdd3006b3c
 - name: github.com/extemporalgenome/slug
   version: 0320c85e32e0015b090f08a5d1324d5ab6094f07
+- name: github.com/jaredfolkins/badactor
+  version: 60f5c9bf2d1121641ad5ba9ee231da0005056d48
 - name: github.com/jmoiron/sqlx
-  version: 4a933341a532f7d5bf05bea24de238734e033dfb
+  version: bdae0c3219c3bdb92f3d7c70825018712787c933
   subpackages:
   - reflectx
 - name: github.com/klauspost/compress
@@ -20,7 +22,7 @@ imports:
 - name: github.com/klauspost/crc32
   version: 19b0b332c9e4516a6370a0456e6182c3b5036720
 - name: github.com/labstack/echo
-  version: 6e183fd3d8063a14da04fa4439c52fb6b84d1cdb
+  version: 1ca76e5e883c794c6680896c65f050438deec0d4
   subpackages:
   - engine/fasthttp
   - middleware
@@ -47,7 +49,7 @@ imports:
 - name: github.com/satori/go.uuid
   version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: github.com/valyala/fasthttp
-  version: 33ed259db713ef4460de2ad4c9429d5bdc8385fd
+  version: 83a24c301bb683e450cd0304a3eb69556c48678c
   subpackages:
   - fasthttputil
 - name: github.com/valyala/fasttemplate
@@ -58,7 +60,7 @@ imports:
   - bcrypt
   - blowfish
 - name: golang.org/x/net
-  version: 3f122ce3dbbe488b7e6a8bdb26f41edec852a40b
+  version: d7bf3545bb0dacf009c535b3d3fbf53ac0a339ab
   subpackages:
   - context
 - name: golang.org/x/sys
@@ -66,7 +68,7 @@ imports:
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: e4775119bd79944a15a741ac4be61e43509a70d9
+  version: 3b39eb1f65eff3fc1f2746b6f7362d6ad1dcc4ad
   subpackages:
   - unicode/norm
   - transform

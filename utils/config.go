@@ -1,11 +1,19 @@
-// queries the config table for settings
 package utils
+
+// queries the config table for settings
 
 import (
 	"strconv"
 
+	"github.com/jaredfolkins/badactor"
 	"github.com/mewben/db-go-env"
 )
+
+// ST badactor studio
+var ST *badactor.Studio
+var STStrikeLimit = 10
+var STExpireBase = 60 // 10 attempts ever 1 second
+var STSentence = 5    // try again in 5 minutes
 
 // generic
 func getConfig(key string) (value string, err error) {
@@ -23,11 +31,13 @@ func getConfig(key string) (value string, err error) {
 	return
 }
 
+// GetConfigString string config
 func GetConfigString(key string) (value string, err error) {
 	value, err = getConfig(key)
 	return
 }
 
+// GetConfigInt int config
 func GetConfigInt(key string) (value int, err error) {
 	v, err := getConfig(key)
 	if err != nil {
@@ -40,6 +50,7 @@ func GetConfigInt(key string) (value int, err error) {
 	return
 }
 
+// GetConfigFloat64 float64
 func GetConfigFloat64(key string) (value float64, err error) {
 	v, err := getConfig(key)
 	if err != nil {

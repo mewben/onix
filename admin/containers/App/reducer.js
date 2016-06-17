@@ -76,9 +76,11 @@ export default function app(state = initialState, action) {
 
 	switch (action.type) {
 
+		case 'POST_SAVE_SUCC':
+		case 'TAG_SAVE_SUCC':
 		case 'NOTIF_SUCC':
 			let success = 'Action successful.'
-			if (action.hasOwnProperty('meta') && action.meta.hasOwnProperty('msg')) {
+			if (action.meta && 'msg' in action.meta) {
 				success = action.meta.msg
 			}
 			return state

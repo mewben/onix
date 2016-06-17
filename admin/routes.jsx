@@ -12,7 +12,11 @@ import PostsList from 'containers/Posts/list'
 import PostsNew from 'containers/Posts/new'
 import PostsEdit from 'containers/Posts/edit'
 // import PostsShow from 'routes/PostsShow'
-// import Tags from 'routes/Tags'
+import Tags from 'containers/Tags'
+import TagsNew from 'containers/Tags/new'
+import TagsList from 'containers/Tags/list'
+import TagsEdit from 'containers/Tags/edit'
+
 import NotFound from 'routes/NotFound'
 
 import auth from 'containers/Admin/onEnter'
@@ -27,6 +31,11 @@ export default function routes(store) {
 					<IndexRoute component={PostsList} onEnter={PostsList.onEnter(store)} />
 					<Route path="new" component={PostsNew} onEnter={PostsNew.onEnter(store)} />
 					<Route path=":id/edit" component={PostsEdit} onEnter={PostsEdit.onEnter(store)} />
+				</Route>
+				<Route path="tags" component={Tags}>
+					<IndexRoute component={TagsList} onEnter={TagsList.onEnter(store)} />
+					<Route path="new" component={TagsNew} />
+					<Route path=":id/edit" component={TagsEdit} onEnter={TagsEdit.onEnter(store)} />
 				</Route>
 				<IndexRedirect from="/" to="posts" />
 			</Route>
