@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/extemporalgenome/slug"
 	"github.com/lib/pq"
@@ -31,6 +32,7 @@ type Post struct {
 	MetaTitle       string       `db:"meta_title" json:"meta_title"`
 	MetaDescription string       `db:"meta_description" json:"meta_description"`
 	Status          string       `json:"status"`
+	UpdatedAt       time.Time    `db:"updated_at" json:"updated_at"`
 	CreatedBy       int          `db:"created_by" json:"created_by"`
 	UpdatedBy       int          `db:"updated_by" json:"updated_by"`
 }

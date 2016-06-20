@@ -32,3 +32,13 @@ func (*SiteController) Single(c echo.Context) error {
 
 	return c.Render(200, "index", ret)
 }
+
+// Sitemap xml
+func (*SiteController) Sitemap(c echo.Context) error {
+	ret, err := models.Sitemap()
+	if err != nil {
+		return c.XML(400, err)
+	}
+
+	return c.XML(200, ret)
+}

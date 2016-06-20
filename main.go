@@ -122,8 +122,9 @@ func main() {
 
 	// ======= SITES =====
 	site := controllers.SiteController{}
-	app.Get("/", site.Home)
-	app.Get("/:slug", site.Single)
+	app.GET("/", site.Home)
+	app.GET("/:slug", site.Single)
+	app.GET("/sitemap.xml", site.Sitemap)
 
 	app.Run(fasthttp.New(config.Port))
 }
